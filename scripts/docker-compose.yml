@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+
+  app:
+    container_name: app
+    build: ./app
+    volumes:
+      - './app:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+
+  api:
+    container_name: api
+    depends_on:
+      - redis
+    build: ./api
+    volumes:
+      - './api:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=production
+
+  redis:
+    container_name: redis
+    image: redis
+
+  redisCommander:
+    container_name: redis-commander
+    depends_on:
+      - redis
+    image: tenstartups/redis-commander
+    command: --redis-host redis
+    ports:
+      - '8081:8081'
+
+  webserver:
+    container_name: webserver
+    depends_on:
+      - app
+      - api
+    image: nginx
+    volumes:
+      - ./nginx/mysite.template:/etc/nginx/conf.d/mysite.template
+    ports:
+      - '80:80'
+    environment:
+      - APP_HOST=app
+      - APP_PORT=3000
+      - API_HOST=api
+      - API_PORT=4000
+    command: /bin/bash -c "envsubst '$$APP_HOST, $$APP_PORT, $$API_HOST, $$API_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
