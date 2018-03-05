@@ -6,8 +6,9 @@ import AppUI from '../ui/AppUI';
 
 const mapStateToProps = state => (
   {
-    timelineLoading: state.timeline.timelineLoading,
-    timelineData: state.timeline.timelineData,
+    open: state.userMeetingCalendar.open,
+    buffer: state.userMeetingCalendar.buffer,
+    userEvents: state.userMeetingCalendar.userEvents,
   }
 );
 

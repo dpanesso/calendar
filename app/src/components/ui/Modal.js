@@ -6,7 +6,7 @@ import ModalEvent from './ModalEvent';
 type Props = {
   open: Object,
   buffer: Object,
-  updateKeyEvent: Function,
+  onUpdateKeyEvent: Function,
   handleClose: Function,
   onSubmit: Function,
 };
@@ -15,7 +15,7 @@ const Modal = (props: Props) => {
   const {
     open,
     buffer,
-    updateKeyEvent,
+    onUpdateKeyEvent,
     handleClose,
     onSubmit,
   } = props;
@@ -23,14 +23,14 @@ const Modal = (props: Props) => {
     open.newMeetingModal === true ?
       <ModalEvent
         buffer={buffer}
-        updateKeyEvent={updateKeyEvent}
+        onUpdateKeyEvent={onUpdateKeyEvent}
         handleClose={handleClose}
         onSubmit={onSubmit}
         type="new meeting"
       /> :
       <ModalEvent
         buffer={buffer}
-        updateKeyEvent={updateKeyEvent}
+        onUpdateKeyEvent={onUpdateKeyEvent}
         handleClose={handleClose}
         onSubmit={onSubmit}
         type="update meeting"

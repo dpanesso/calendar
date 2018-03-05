@@ -1,6 +1,10 @@
 {
-  "timeline": {
-    "timelineLoading": false,
-  	"timelineData": []
+  "userMeetingCalendar": {
+    "open": {
+      "updateMeetingModal": false,
+      "newMeetingModal": false
+    },
+    "buffer": {},
+    "userEvents": []
   }
 }

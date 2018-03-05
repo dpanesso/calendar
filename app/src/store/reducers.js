@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import { C } from '../constants';
 
-export const timeline = (state: Object = {}, action: Object) => {
+export const userMeetingCalendar = (state: Object = {}, action: Object) => {
   switch (action.type) {
     case C.START_FETCH_TIMELINE_DATA:
       return {
@@ -20,5 +20,5 @@ export const timeline = (state: Object = {}, action: Object) => {
 };
 
 export default combineReducers({
-  timeline,
+  userMeetingCalendar,
 });

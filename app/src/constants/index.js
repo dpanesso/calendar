@@ -7,8 +7,9 @@ export const activateLogger = true;
  * Redux Store
  */
 export const C = {
-  SET_TIMELINE_DATA_AFTER_FETCH: 'SET_TIMELINE_DATA_AFTER_FETCH',
-  START_FETCH_TIMELINE_DATA: 'START_FETCH_TIMELINE_DATA',
+  START_UPDATE: 'START_UPDATE',
+  ON_KEY_UPDATE: 'ON_KEY_UPDATE',
+  ON_SUBMIT: 'ON_SUBMIT',
 };
 
 export const defaultTitle = 'Bunga-Bunga';

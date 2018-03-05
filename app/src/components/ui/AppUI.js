@@ -6,7 +6,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from './Navbar';
 import Modal from './Modal';
-import events from '../../utils/events';
+import sampleEvents from '../../constants/sampleEvents';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import { defaultTitle } from '../../constants';
 import '../../styles/calendar.css';
@@ -16,7 +16,7 @@ import '../../styles/calendar.css';
 BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 type State = {
-  userEventChooser: {
+  userMeetingCalendar: {
     open: {
       updateMeetingModal: boolean,
       newMeetingModal: boolean,
@@ -28,20 +28,20 @@ type State = {
 
 class AppUI extends Component<{}, State> {
   state = {
-    userEventChooser: {
+    userMeetingCalendar: {
       open: {
         updateMeetingModal: false,
         newMeetingModal: false,
       },
       buffer: {},
-      userEvents: events,
+      userEvents: sampleEvents,
     },
   }
 
   onSubmit = (key: string) => {
     switch (key) {
       case 'update meeting':
-        this.updateEvent();
+        this.onUpdateEvent();
         break;
       case 'new meeting':
         this.onNewEvent();
@@ -52,9 +52,9 @@ class AppUI extends Component<{}, State> {
   };
 
   onNewEvent = () => {
-    const { userEventChooser } = this.state;
-    const tmpValues = userEventChooser.buffer;
-    const id = userEventChooser.userEvents.length;
+    const { userMeetingCalendar } = this.state;
+    const tmpValues = userMeetingCalendar.buffer;
+    const id = userMeetingCalendar.userEvents.length;
     const { title, start, end } = tmpValues;
     const newEvent = {
       id,
@@ -62,101 +62,101 @@ class AppUI extends Component<{}, State> {
       start,
       end,
     };
-    userEventChooser.userEvents.push(newEvent);
-    this.setState({ userEventChooser });
+    userMeetingCalendar.userEvents.push(newEvent);
+    this.setState({ userMeetingCalendar });
     this.handleClose();
   };
 
-  updateEvent = () => {
-    const { userEventChooser } = this.state;
-    const tmpValues = userEventChooser.buffer;
-    const evt = userEventChooser.userEvents[tmpValues.id];
+  onUpdateEvent = () => {
+    const { userMeetingCalendar } = this.state;
+    const tmpValues = userMeetingCalendar.buffer;
+    const evt = userMeetingCalendar.userEvents[tmpValues.id];
     evt.title = tmpValues.title;
     evt.start = tmpValues.start;
     evt.end = tmpValues.end;
-    this.setState({ userEventChooser });
+    this.setState({ userMeetingCalendar });
     this.handleClose();
   };
 
-  updateKeyEvent = (key: string, value: Date) => {
-    const { userEventChooser } = this.state;
-    const { buffer } = userEventChooser;
+  onUpdateKeyEvent = (key: string, value: Date) => {
+    const { userMeetingCalendar } = this.state;
+    const { buffer } = userMeetingCalendar;
     const { start, end } = buffer;
     let newState = {};
     switch (key) {
       case 'title':
         newState = {
-          ...userEventChooser,
+          ...userMeetingCalendar,
           buffer: {
             ...buffer,
             title: value,
           },
         };
-        this.setState({ userEventChooser: newState });
+        this.setState({ userMeetingCalendar: newState });
         break;
       case 'start date':
         newState = {
-          ...userEventChooser,
+          ...userMeetingCalendar,
           buffer: {
             ...buffer,
             start: rebuildDate(start, value),
           },
         };
-        this.setState({ userEventChooser: newState });
+        this.setState({ userMeetingCalendar: newState });
         break;
       case 'end date':
         newState = {
-          ...userEventChooser,
+          ...userMeetingCalendar,
           buffer: {
             ...buffer,
             end: rebuildDate(end, value),
           },
         };
-        this.setState({ userEventChooser: newState });
+        this.setState({ userMeetingCalendar: newState });
         break;
       case 'start time':
         newState = {
-          ...userEventChooser,
+          ...userMeetingCalendar,
           buffer: {
             ...buffer,
             start: rebuildTime(start, value),
           },
         };
-        this.setState({ userEventChooser: newState });
+        this.setState({ userMeetingCalendar: newState });
         break;
       case 'end time':
         newState = {
-          ...userEventChooser,
+          ...userMeetingCalendar,
           buffer: {
             ...buffer,
             end: rebuildTime(end, value),
           },
         };
-        this.setState({ userEventChooser: newState });
+        this.setState({ userMeetingCalendar: newState });
         break;
       default:
-        console.log(`updateKeyEvent - wrong key: ${key}`);
+        console.log(`onUpdateKeyEvent - wrong key: ${key}`);
     }
   };
 
   handleOpen = (event: Object) => {
-    const { userEventChooser } = this.state;
-    userEventChooser.buffer = event;
+    const { userMeetingCalendar } = this.state;
+    userMeetingCalendar.buffer = event;
     // if new meeting
     if (!event.title) {
-      userEventChooser.buffer.title = defaultTitle;
-      userEventChooser.open.newMeetingModal = true;
+      userMeetingCalendar.buffer.title = defaultTitle;
+      userMeetingCalendar.open.newMeetingModal = true;
     } else { // update an existing meeting
-      userEventChooser.open.updateMeetingModal = true;
+      userMeetingCalendar.open.updateMeetingModal = true;
     }
-    this.setState({ userEventChooser });
+    this.setState({ userMeetingCalendar });
   };
 
   handleClose = () => {
-    const { userEventChooser } = this.state;
-    userEventChooser.open.updateMeetingModal = false;
-    userEventChooser.open.newMeetingModal = false;
-    this.setState({ userEventChooser });
+    const { userMeetingCalendar } = this.state;
+    userMeetingCalendar.open.updateMeetingModal = false;
+    userMeetingCalendar.open.newMeetingModal = false;
+    this.setState({ userMeetingCalendar });
   };
 
   render() {
@@ -164,7 +164,7 @@ class AppUI extends Component<{}, State> {
       userEvents,
       buffer,
       open,
-    } = this.state.userEventChooser;
+    } = this.state.userMeetingCalendar;
 
     return (
       <div className="App">
@@ -187,7 +187,7 @@ class AppUI extends Component<{}, State> {
           <Modal
             open={open}
             buffer={buffer}
-            updateKeyEvent={this.updateKeyEvent}
+            onUpdateKeyEvent={this.onUpdateKeyEvent}
             handleClose={this.handleClose}
             onSubmit={this.onSubmit}
           />
