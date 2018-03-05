@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const config = require('../config');
 
 const app = express();
 // log requests in the console
@@ -15,8 +16,8 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, './build', 'index.html'));
 });
 
-app.listen(3000);
+app.listen(config.app.port);
 
-console.log('App running on port 3000');
+console.log(`App running on port ${config.app.port}`);
 
 module.exports = app;

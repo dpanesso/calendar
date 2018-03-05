@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
-const config = require('./config');
+const config = require('../config');
 
 
 // fetch historical data from various APIs and initialize REDIS with that data
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // Passport for authentication
 app.use(session({
-  secret: config.secret,
+  secret: config.api.secret,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -41,8 +41,8 @@ app.use(passport.session());
 // routing
 app.use(routes);
 
-app.listen(config.port);
+app.listen(config.api.port);
 
-console.log(`API running on port ${config.port}`);
+console.log(`API running on port ${config.api.port}`);
 
 module.exports = app;
