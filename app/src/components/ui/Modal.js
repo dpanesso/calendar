@@ -1,21 +1,27 @@
 // @flow
 import React from 'react';
-import EventModal from './EventModal';
-import SlotModal from './SlotModal';
+import ModalEvent from './ModalEvent';
+import ModalSlot from './ModalSlot';
 
 
 type Props = {
   open: Object,
   event: Object,
   slotInfo: Object,
-}
+  updateKeyEvent: Function,
+};
 
 const Modal = (props: Props) => {
-  const { open, event, slotInfo } = props;
+  const {
+    open,
+    event,
+    slotInfo,
+    updateKeyEvent,
+  } = props;
   return (
     open.eventModal === true ?
-      <EventModal event={event} /> :
-      <SlotModal slot={slotInfo} />
+      <ModalEvent event={event} updateKeyEvent={updateKeyEvent} /> :
+      <ModalSlot slot={slotInfo} updateKeyEvent={updateKeyEvent} />
   );
 };
 

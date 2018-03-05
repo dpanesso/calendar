@@ -1,13 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from './Navbar';
 import Modal from './Modal';
 import events from '../../utils/events';
+import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import '../../styles/calendar.css';
 
 // Setup the localizer by providing the moment (or globalize) Object
@@ -22,6 +23,7 @@ type State = {
     },
     event: Object,
     slotInfo: Object,
+    buffer: Object,
     userEvents: Array<Object>,
   },
 };
@@ -35,12 +37,14 @@ class AppUI extends Component<{}, State> {
       },
       event: {},
       slotInfo: {},
+      buffer: {},
       userEvents: events,
     },
   }
 
   handleOpenEvent = (event: Object) => {
     const { userEventChooser } = this.state;
+    userEventChooser.buffer = event;
     userEventChooser.open.eventModal = true;
     userEventChooser.event = event;
     this.setState({ userEventChooser });
@@ -48,6 +52,7 @@ class AppUI extends Component<{}, State> {
 
   handleOpenSlot = (slotInfo: Object) => {
     const { userEventChooser } = this.state;
+    userEventChooser.buffer = slotInfo;
     userEventChooser.open.slotModal = true;
     userEventChooser.slotInfo = slotInfo;
     this.setState({ userEventChooser });
@@ -62,18 +67,90 @@ class AppUI extends Component<{}, State> {
     this.setState({ userEventChooser });
   };
 
+  updateKeyEvent = (key: string, value: Date) => {
+    const { userEventChooser } = this.state;
+    const { buffer } = userEventChooser;
+    const { start, end } = buffer;
+    let newState = {};
+    switch (key) {
+      case 'title':
+        newState = {
+          ...userEventChooser,
+          buffer: {
+            ...buffer,
+            title: value,
+          },
+        };
+        this.setState({ userEventChooser: newState });
+        break;
+      case 'start date':
+        newState = {
+          ...userEventChooser,
+          buffer: {
+            ...buffer,
+            start: rebuildDate(start, value),
+          },
+        };
+        this.setState({ userEventChooser: newState });
+        break;
+      case 'end date':
+        newState = {
+          ...userEventChooser,
+          buffer: {
+            ...buffer,
+            end: rebuildDate(end, value),
+          },
+        };
+        this.setState({ userEventChooser: newState });
+        break;
+      case 'start time':
+        newState = {
+          ...userEventChooser,
+          buffer: {
+            ...buffer,
+            start: rebuildTime(start, value),
+          },
+        };
+        this.setState({ userEventChooser: newState });
+        break;
+      case 'end time':
+        newState = {
+          ...userEventChooser,
+          buffer: {
+            ...buffer,
+            end: rebuildTime(end, value),
+          },
+        };
+        this.setState({ userEventChooser: newState });
+        break;
+      default:
+        console.log(value);
+    }
+  };
+
+  updateEvent= () => {
+    const { userEventChooser } = this.state;
+    const tmpValues = userEventChooser.buffer;
+    const evt = userEventChooser.userEvents[tmpValues.id];
+    evt.title = tmpValues.title;
+    evt.start = tmpValues.start;
+    evt.end = tmpValues.end;
+    this.setState({ userEventChooser });
+    this.handleClose();
+  };
+
   render() {
     const actions = [
-      <FlatButton
+      <RaisedButton
         label="Cancel"
         primary={true}
+        style={{ marginRight: '20px' }}
         onClick={this.handleClose}
       />,
-      <FlatButton
+      <RaisedButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose}
+        onClick={this.updateEvent}
       />,
     ];
     const {
@@ -82,10 +159,6 @@ class AppUI extends Component<{}, State> {
       slotInfo,
       open,
     } = this.state.userEventChooser;
-
-// onSelectSlot={slotInfo => alert(`selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-//                                 `\nend: ${slotInfo.end.toLocaleString()}` +
-//                                 `\naction: ${slotInfo.action}`)
 
     return (
       <div className="App">
@@ -104,8 +177,14 @@ class AppUI extends Component<{}, State> {
           modal={false}
           open={open.eventModal || open.slotModal}
           onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
         >
-          <Modal open={open} event={event} slotInfo={slotInfo} />
+          <Modal
+            open={open}
+            event={event}
+            slotInfo={slotInfo}
+            updateKeyEvent={this.updateKeyEvent}
+          />
         </Dialog>
       </div>
     );
