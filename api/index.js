@@ -1,15 +1,15 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
-const initializeRedisData = require('./redis/initializeRedisData');
+const initializeRedisData = require('./services/database/initializeRedisData');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const dataRoutes = require('./routes/data');
-const authRoutes = require('./routes/auth');
-const defaultRoutes = require('./routes/default');
+const routes = require('./routes');
+const config = require('./config');
+
 
 // fetch historical data from various APIs and initialize REDIS with that data
 initializeRedisData();
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // Passport for authentication
 app.use(session({
-  secret: 'keyboard cat',
+  secret: config.secret,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -38,13 +38,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// routes
-app.use('/api/data', dataRoutes);
-app.use('/api/auth', authRoutes);
-app.use(defaultRoutes);
+// routing
+app.use(routes);
 
-app.listen(4000);
+app.listen(config.port);
 
-console.log('API running on port 4000');
+console.log(`API running on port ${config.port}`);
 
 module.exports = app;

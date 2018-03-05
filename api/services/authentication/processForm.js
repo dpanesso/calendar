@@ -1,6 +1,6 @@
 // @flow
-const { isValidEmail, isFormatPasswordValid } = require('../../redis/auth/formValidationHelpers');
-const createUser = require('../../redis/auth/createUser');
+const { isValidEmail, isFormatPasswordValid } = require('./formValidationHelpers');
+const createUser = require('../database/queries/createUser');
 
 /**
  * Validate and process the sign up form

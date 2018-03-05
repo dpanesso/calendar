@@ -1,5 +1,5 @@
 // @flow
-const { encrypt, encryptSHA } = require('../../utils/encrypt');
+const { encrypt, encryptSHA } = require('../../../utils/encrypt');
 const client = require('../redisClient');
 const redis = require('redis');
 

@@ -1,7 +1,7 @@
 // @flow
 const validator = require('validator');
-const client = require('../redisClient');
 const { compareHash } = require('../../utils/encrypt');
+const getUserbyId = require('../database/queries/getUserData');
 
 // regexp messing with eslint
 /* eslint no-useless-escape: "off" */
@@ -12,13 +12,15 @@ const isValidEmail = (email: string): Promise<boolean> => new Promise((resolve) 
     isValid = false;
     resolve(isValid);
   }
-  client.hgetall(`user:${email}`, (err, reply) => {
-    // console.log(reply);
-    if (err) console.log(err);
+  getUserbyId(email).then((reply) => {
     if (reply !== null) isValid = false;
-    // console.log(`isValid: ${isValid.toString()}`);
     resolve(isValid);
   });
+  // client.hgetall(`user:${email}`, (err, reply) => {
+  //   if (err) console.log(err);
+  //   if (reply !== null) isValid = false;
+  //   resolve(isValid);
+  // });
 });
 
 const validPassword = (user: Object, formPassword: string) => {
