@@ -4,16 +4,29 @@ import { C } from '../constants';
 
 export const userMeetingCalendar = (state: Object = {}, action: Object) => {
   switch (action.type) {
-    case C.START_FETCH_TIMELINE_DATA:
+
+    case C.START_UPDATE:
+      const type = action.payload.type;
+      
       return {
-        timelineLoading: true,
-        timelineData: [],
+        ...state,
+        buffer:
       };
-    case C.SET_TIMELINE_DATA_AFTER_FETCH:
+
+      case C.ON_KEY_UPDATE:
+      return {
+        ...state,
+        buffer: {
+
+        }
+      };
+
+    case C.ON_SUBMIT:
       return {
         timelineLoading: false,
         timelineData: action.payload,
       };
+
     default:
       return state;
   }
