@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const config = require('../config');
+const config = require('./config');
 
 const app = express();
 // log requests in the console

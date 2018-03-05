@@ -21,7 +21,7 @@ const Modal = (props: Props) => {
   return (
     open.eventModal === true ?
       <ModalEvent event={event} updateKeyEvent={updateKeyEvent} /> :
-      <ModalSlot slot={slotInfo} updateKeyEvent={updateKeyEvent} />
+      <ModalSlot slotInfo={slotInfo} updateKeyEvent={updateKeyEvent} />
   );
 };
 

@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
-const config = require('../config');
+const config = require('./config');
 
 
 // fetch historical data from various APIs and initialize REDIS with that data
