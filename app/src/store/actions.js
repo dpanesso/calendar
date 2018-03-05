@@ -1,12 +1,12 @@
 // @flow
 import { C } from '../constants';
 
-export const startFetchTimelineData = () => (
+export const startUpdateCalendar = () => (
   {
-    type: C.START_FETCH_TIMELINE_DATA,
+    type: C.START_UPDATE,
   });
 
-export const setTimelineData = (data: Array<Object>) => (
+export const fieldUpdateCalendar = (data: Array<Object>) => (
   {
     type: C.SET_TIMELINE_DATA_AFTER_FETCH,
     payload: data,

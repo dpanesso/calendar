@@ -2,6 +2,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import MaterialLoader from './MaterialLoader';
+import '../../styles/loaders.css';
 
 type Props = {
   suLoading: boolean,

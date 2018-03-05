@@ -58,8 +58,9 @@ class AuthModal extends Component<{}, State> {
 
   onSubmitLogin = (event: Object) => {
     const { login } = this.state;
-    login.loading = true;
-    this.setState({ login });
+    const newState1 = login;
+    newState1.loading = true;
+    this.setState({ login: newState1 });
 
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
@@ -74,21 +75,24 @@ class AuthModal extends Component<{}, State> {
     const url = prefixURL('api/auth/login');
     customPost(url, formData)
       .then((response) => {
-        login.errors = response.errors ? response.errors : {};
-        login.loading = false;
-        this.setState({ login });
+        const newState2 = login;
+        newState2.errors = response.errors ? response.errors : {};
+        newState2.loading = false;
+        this.setState({ login: newState2 });
       })
       .catch((error) => {
         console.log(error);
-        login.loading = false;
-        this.setState({ login });
+        const newState2 = login;
+        newState2.loading = false;
+        this.setState({ login: newState2 });
       });
   }
 
   onSubmitSignUp = (event: Object) => {
     const { signUp } = this.state;
-    signUp.loading = true;
-    this.setState({ signUp });
+    const newState1 = signUp;
+    newState1.loading = true;
+    this.setState({ signUp: newState1 });
 
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
@@ -109,24 +113,27 @@ class AuthModal extends Component<{}, State> {
     const url = prefixURL('api/auth/signup');
     customPost(url, formData)
       .then((response) => {
-        signUp.errors = response.errors ? response.errors : {};
-        signUp.loading = false;
-        this.setState({ signUp });
+        const newState2 = signUp;
+        newState2.errors = response.errors ? response.errors : {};
+        newState2.loading = false;
+        this.setState({ signUp: newState2 });
       });
   }
 
   onChangeLogin = (event: Object) => {
     const field = event.target.name;
     const { login } = this.state;
-    login.user[field] = event.target.value;
-    this.setState({ login });
+    const newState = login;
+    newState.user[field] = event.target.value;
+    this.setState({ login: newState });
   };
 
   onChangeSignUp = (event: Object) => {
     const field = event.target.name;
     const { signUp } = this.state;
-    signUp.user[field] = event.target.value;
-    this.setState({ signUp });
+    const newState = signUp;
+    newState.user[field] = event.target.value;
+    this.setState({ signUp: newState });
   };
 
   render() {

@@ -7,8 +7,8 @@ export const activateLogger = true;
  * Redux Store
  */
 export const C = {
-  START_UPDATE: 'START_UPDATE',
-  ON_KEY_UPDATE: 'ON_KEY_UPDATE',
+  START_MEETING_UPDATE: 'START_MEETING_UPDATE',
+  FIELD_UPDATE: 'FIELD_UPDATE',
   ON_SUBMIT: 'ON_SUBMIT',
 };
 
