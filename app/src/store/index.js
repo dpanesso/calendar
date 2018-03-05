@@ -1,7 +1,7 @@
 // @flow
 import { createStore, applyMiddleware } from 'redux';
 import appReducer from './reducers';
-import { activateLogger } from '../config/constants';
+import { activateLogger } from '../constants';
 
 const logger = store => next => (action) => {
   let result;

@@ -1,6 +1,6 @@
 // @flow
 import { combineReducers } from 'redux';
-import { C } from '../config/constants';
+import { C } from '../constants';
 
 export const timeline = (state: Object = {}, action: Object) => {
   switch (action.type) {

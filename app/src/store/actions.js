@@ -1,5 +1,5 @@
 // @flow
-import { C } from '../config/constants';
+import { C } from '../constants';
 
 export const startFetchTimelineData = () => (
   {

@@ -3,26 +3,34 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
+import RaisedButton from 'material-ui/RaisedButton';
+import { defaultTitle } from '../../constants';
 
 type Props = {
-  event: {
+  buffer: {
     title: string,
     start: Date,
     end: Date
   },
   updateKeyEvent: Function,
+  onSubmit: Function,
+  handleClose: Function,
+  type: string,
 };
 
 const ModalEvent = (props: Props) => {
   const {
-    event,
+    buffer,
     updateKeyEvent,
+    onSubmit,
+    handleClose,
+    type,
   } = props;
   const {
     title,
     start,
     end,
-  } = event;
+  } = buffer;
 
   return (
     <div>
@@ -30,7 +38,7 @@ const ModalEvent = (props: Props) => {
         name="title"
         hintText="title"
         floatingLabelText="title"
-        defaultValue={title}
+        defaultValue={title || defaultTitle}
         onChange={(evt, value) => updateKeyEvent('title', value)}
       />
       <DatePicker
@@ -58,12 +66,23 @@ const ModalEvent = (props: Props) => {
       />
       <TimePicker
         name="end time"
-        hintText="start time"
-        floatingLabelText="start time"
+        hintText="end time"
+        floatingLabelText="end time"
         minutesStep={30}
         format="24hr"
         defaultTime={new Date(end)}
         onChange={(evt, value) => updateKeyEvent('end time', value)}
+      />
+      <RaisedButton
+        label="Cancel"
+        primary={true}
+        style={{ marginRight: '20px' }}
+        onClick={handleClose}
+      />,
+      <RaisedButton
+        label="Submit"
+        primary={true}
+        onClick={() => onSubmit(type)}
       />
     </div>
   );

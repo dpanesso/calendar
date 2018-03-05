@@ -49,13 +49,13 @@ yarn start
 Here's a set-up example.
 * Launch an Ubuntu EC2 instance with the following parameters (use default for others):
 
--- AMI
+AMI
 ![alt text](https://raw.githubusercontent.com/johnnyconroy/calendar/master/images/AMI.png)
 
--- Size (Docker needs a bit more memory to launch all the services)
+Size (Docker needs a bit more memory to launch all the services)
 ![alt text](https://raw.githubusercontent.com/johnnyconroy/calendar/master/images/instance_size.png)
 
--- Security groups (specific to the ports choosen in app config)
+Security groups (specific to the ports choosen in app config)
 ![alt text](https://raw.githubusercontent.com/johnnyconroy/calendar/master/images/security_groups.png)
 
 * SSH to your instance

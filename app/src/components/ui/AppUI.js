@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -9,6 +8,7 @@ import Navbar from './Navbar';
 import Modal from './Modal';
 import events from '../../utils/events';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
+import { defaultTitle } from '../../constants';
 import '../../styles/calendar.css';
 
 // Setup the localizer by providing the moment (or globalize) Object
@@ -18,11 +18,9 @@ BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 type State = {
   userEventChooser: {
     open: {
-      eventModal: boolean,
-      slotModal: boolean,
+      updateMeetingModal: boolean,
+      newMeetingModal: boolean,
     },
-    event: Object,
-    slotInfo: Object,
     buffer: Object,
     userEvents: Array<Object>,
   },
@@ -32,39 +30,52 @@ class AppUI extends Component<{}, State> {
   state = {
     userEventChooser: {
       open: {
-        eventModal: false,
-        slotModal: false,
+        updateMeetingModal: false,
+        newMeetingModal: false,
       },
-      event: {},
-      slotInfo: {},
       buffer: {},
       userEvents: events,
     },
   }
 
-  handleOpenEvent = (event: Object) => {
-    const { userEventChooser } = this.state;
-    userEventChooser.buffer = event;
-    userEventChooser.open.eventModal = true;
-    userEventChooser.event = event;
-    this.setState({ userEventChooser });
+  onSubmit = (key: string) => {
+    switch (key) {
+      case 'update meeting':
+        this.updateEvent();
+        break;
+      case 'new meeting':
+        this.onNewEvent();
+        break;
+      default:
+        console.log(`onSubmit - wrong key: ${key}`);
+    }
   };
 
-  handleOpenSlot = (slotInfo: Object) => {
+  onNewEvent = () => {
     const { userEventChooser } = this.state;
-    userEventChooser.buffer = slotInfo;
-    userEventChooser.open.slotModal = true;
-    userEventChooser.slotInfo = slotInfo;
+    const tmpValues = userEventChooser.buffer;
+    const id = userEventChooser.userEvents.length;
+    const { title, start, end } = tmpValues;
+    const newEvent = {
+      id,
+      title,
+      start,
+      end,
+    };
+    userEventChooser.userEvents.push(newEvent);
     this.setState({ userEventChooser });
+    this.handleClose();
   };
 
-  handleClose = () => {
+  updateEvent = () => {
     const { userEventChooser } = this.state;
-    userEventChooser.open.eventModal = false;
-    userEventChooser.open.slotModal = false;
-    userEventChooser.slotInfo = {};
-    userEventChooser.event = {};
+    const tmpValues = userEventChooser.buffer;
+    const evt = userEventChooser.userEvents[tmpValues.id];
+    evt.title = tmpValues.title;
+    evt.start = tmpValues.start;
+    evt.end = tmpValues.end;
     this.setState({ userEventChooser });
+    this.handleClose();
   };
 
   updateKeyEvent = (key: string, value: Date) => {
@@ -124,39 +135,34 @@ class AppUI extends Component<{}, State> {
         this.setState({ userEventChooser: newState });
         break;
       default:
-        console.log(value);
+        console.log(`updateKeyEvent - wrong key: ${key}`);
     }
   };
 
-  updateEvent= () => {
+  handleOpen = (event: Object) => {
     const { userEventChooser } = this.state;
-    const tmpValues = userEventChooser.buffer;
-    const evt = userEventChooser.userEvents[tmpValues.id];
-    evt.title = tmpValues.title;
-    evt.start = tmpValues.start;
-    evt.end = tmpValues.end;
+    userEventChooser.buffer = event;
+    // if new meeting
+    if (!event.title) {
+      userEventChooser.buffer.title = defaultTitle;
+      userEventChooser.open.newMeetingModal = true;
+    } else { // update an existing meeting
+      userEventChooser.open.updateMeetingModal = true;
+    }
     this.setState({ userEventChooser });
-    this.handleClose();
+  };
+
+  handleClose = () => {
+    const { userEventChooser } = this.state;
+    userEventChooser.open.updateMeetingModal = false;
+    userEventChooser.open.newMeetingModal = false;
+    this.setState({ userEventChooser });
   };
 
   render() {
-    const actions = [
-      <RaisedButton
-        label="Cancel"
-        primary={true}
-        style={{ marginRight: '20px' }}
-        onClick={this.handleClose}
-      />,
-      <RaisedButton
-        label="Submit"
-        primary={true}
-        onClick={this.updateEvent}
-      />,
-    ];
     const {
       userEvents,
-      event,
-      slotInfo,
+      buffer,
       open,
     } = this.state.userEventChooser;
 
@@ -169,21 +175,21 @@ class AppUI extends Component<{}, State> {
           defaultView="week"
           scrollToTime={new Date(1970, 1, 1, 6)}
           defaultDate={new Date(2015, 3, 12)}
-          onSelectEvent={evt => this.handleOpenEvent(evt)}
-          onSelectSlot={slot => this.handleOpenSlot(slot)}
+          onSelectEvent={this.handleOpen}
+          onSelectSlot={this.handleOpen}
         />
         <Dialog
-          actions={actions}
           modal={false}
-          open={open.eventModal || open.slotModal}
+          open={open.updateMeetingModal || open.newMeetingModal}
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
           <Modal
             open={open}
-            event={event}
-            slotInfo={slotInfo}
+            buffer={buffer}
             updateKeyEvent={this.updateKeyEvent}
+            handleClose={this.handleClose}
+            onSubmit={this.onSubmit}
           />
         </Dialog>
       </div>
