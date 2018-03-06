@@ -1,3 +1,7 @@
+/**
+ * Warning: Some tests need the API to be running properly
+ * You can launch it from ./api with "yarn start"
+ */
 import encrypt from '../utils/encrypt';
 import parseDates from '../utils/parseDates';
 import sampleDates from '../constants/sampleDates';
@@ -26,7 +30,7 @@ it('customFetch', () => {
 
 const prefix = Math.random().toString(36).substring(7);
 const email = `${prefix}@gmail.com`;
-// only run when API is running
+// only works when API is running
 it('customPost - signup', () => {
   const url = prefixURL('api/auth/signup');
   const postData = {
@@ -40,7 +44,7 @@ it('customPost - signup', () => {
   ));
 });
 
-// only run when API is running
+// only works when API is running
 it('customPost - login', () => {
   const url = prefixURL('api/auth/login');
   const password = encrypt('Thesnake6', email);
