@@ -11,6 +11,7 @@ const encrypt = (password: string) => {
 
 const compareHash = (password: string, hash: string) => bcrypt.compareSync(password, hash);
 
+
 module.exports = {
   encryptSHA,
   encrypt,

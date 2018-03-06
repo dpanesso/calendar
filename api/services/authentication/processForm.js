@@ -21,10 +21,10 @@ const processSignupForm = (payload: Object): Promise<Object> => new Promise((res
         errors.email = 'Email is invalid or already taken.';
       }
 
-      if (!payload || typeof password !== 'string' || !isFormatPasswordValid(password)) {
-        isFormValid = false;
-        errors.password = 'Use at least 8 characters, 1 number, 1 upper and 1 lowercase';
-      }
+      // if (!payload || typeof password !== 'string' || !isFormatPasswordValid(password)) {
+      //   isFormValid = false;
+      //   errors.password = 'Use at least 8 characters, 1 number, 1 upper and 1 lowercase';
+      // }
 
       if (!payload || typeof confirmPassword !== 'string' || confirmPassword !== password) {
         isFormValid = false;

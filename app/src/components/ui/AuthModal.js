@@ -57,16 +57,18 @@ class AuthModal extends Component<{}, State> {
   };
 
   onSubmitLogin = (event: Object) => {
-    const { login } = this.state;
-    const newState1 = login;
-    newState1.loading = true;
-    this.setState({ login: newState1 });
+    const  state  = this.state;
+    this.setState({ ...state,
+                    login : {
+                      ...state.login,
+                      loading : true
+                    }});
 
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-
     // create a string for an HTTP body message
-    const { email, password } = login.user;
+    const user = state.login.user
+    const { email, password} = user
     const encryptedPassword = encrypt(password, email);
     const formData = {
       email,
@@ -75,16 +77,19 @@ class AuthModal extends Component<{}, State> {
     const url = prefixURL('api/auth/login');
     customPost(url, formData)
       .then((response) => {
-        const newState2 = login;
-        newState2.errors = response.errors ? response.errors : {};
-        newState2.loading = false;
-        this.setState({ login: newState2 });
+        this.setState({ ...state,
+                        login : {
+                          ...state.login,
+                          loading : false
+                        }});
       })
       .catch((error) => {
-        console.log(error);
-        const newState2 = login;
-        newState2.loading = false;
-        this.setState({ login: newState2 });
+        this.setState({ ...state,
+                        login : {
+                          ...state.login,
+                          loading : false
+                        }});
+                        throw new Error(error.message)
       });
   }
 
