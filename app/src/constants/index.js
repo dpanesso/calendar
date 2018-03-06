@@ -7,9 +7,10 @@ export const activateLogger = true;
  * Redux Store
  */
 export const C = {
-  START_MEETING_UPDATE: 'START_MEETING_UPDATE',
-  FIELD_UPDATE: 'FIELD_UPDATE',
-  ON_SUBMIT: 'ON_SUBMIT',
+  OPEN_USER_MODAL: 'OPEN_USER_MODAL',
+  CLOSE_USER_MODAL: 'CLOSE_USER_MODAL',
+  UPDATE_FIELD: 'UPDATE_FIELD',
+  SUBMIT_MEETING: 'SUBMIT_MEETING',
 };
 
 export const defaultTitle = 'Bunga-Bunga';

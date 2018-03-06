@@ -1,24 +1,36 @@
 // @flow
 import { connect } from 'react-redux';
-import { startUpdateCalendar, fieldUpdateCalendar } from '../../store/actions';
+import {
+  openUserModal,
+  closeUserModal,
+  updateUserField,
+  submitUserEvent,
+} from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
 
 const mapStateToProps = state => (
   {
-    open: state.userMeetingCalendar.open,
-    buffer: state.userMeetingCalendar.buffer,
-    userEvents: state.userMeetingCalendar.userEvents,
+    userOpenNew: state.userOpenNew,
+    userOpenUpdate: state.userOpenUpdate,
+    userBuffer: state.userBuffer,
+    userEvents: state.userEvents,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    startUpdate() {
-      dispatch(startUpdateCalendar());
+    openModal(kind, event) {
+      dispatch(openUserModal(kind, event));
     },
-    fieldUpdate(data) {
-      dispatch(fieldUpdateCalendar(data));
+    closeModal() {
+      dispatch(closeUserModal());
+    },
+    updateField(field, value) {
+      dispatch(updateUserField(field, value));
+    },
+    submitEvent(event) {
+      dispatch(submitUserEvent(event));
     },
   }
 );

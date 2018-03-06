@@ -4,36 +4,37 @@ import ModalEvent from './ModalEvent';
 
 
 type Props = {
-  open: Object,
-  buffer: Object,
-  onUpdateKeyEvent: Function,
+  userOpenNew: boolean,
+  userBuffer: Object,
+  onUpdateFieldEvent: Function,
   handleClose: Function,
   onSubmit: Function,
 };
 
 const Modal = (props: Props) => {
   const {
-    open,
-    buffer,
-    onUpdateKeyEvent,
+    userOpenNew,
+    userBuffer,
+    onUpdateFieldEvent,
     handleClose,
     onSubmit,
   } = props;
+  const type = userOpenNew ? 'new meeting' : 'update meeting';
   return (
-    open.newMeetingModal === true ?
+    userOpenNew === true ?
       <ModalEvent
-        buffer={buffer}
-        onUpdateKeyEvent={onUpdateKeyEvent}
+        userBuffer={userBuffer}
+        onUpdateFieldEvent={onUpdateFieldEvent}
         handleClose={handleClose}
         onSubmit={onSubmit}
-        type="new meeting"
+        type={type}
       /> :
       <ModalEvent
-        buffer={buffer}
-        onUpdateKeyEvent={onUpdateKeyEvent}
+        userBuffer={userBuffer}
+        onUpdateFieldEvent={onUpdateFieldEvent}
         handleClose={handleClose}
         onSubmit={onSubmit}
-        type="update meeting"
+        type={type}
       />
   );
 };

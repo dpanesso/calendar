@@ -1,200 +1,199 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from './Navbar';
 import Modal from './Modal';
-import sampleEvents from '../../constants/sampleEvents';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
-import { defaultTitle } from '../../constants';
 import '../../styles/calendar.css';
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
 BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
-type State = {
-  userMeetingCalendar: {
-    open: {
-      updateMeetingModal: boolean,
-      newMeetingModal: boolean,
-    },
-    buffer: Object,
-    userEvents: Array<Object>,
-  },
+type Props = {
+  userOpenNew: boolean,
+  userOpenUpdate: boolean,
+  userBuffer: Object,
+  userEvents: Array<Object>,
+  openModal: Function,
+  closeModal: Function,
+  updateField: Function,
+  submitEvent: Function,
 };
 
-class AppUI extends Component<{}, State> {
-  state = {
-    userMeetingCalendar: {
-      open: {
-        updateMeetingModal: false,
-        newMeetingModal: false,
-      },
-      buffer: {},
-      userEvents: sampleEvents,
-    },
-  }
+const AppUI = (props: Props) => {
+  const {
+    userOpenNew,
+    userOpenUpdate,
+    userBuffer,
+    userEvents,
+    openModal,
+    closeModal,
+    updateField,
+    submitEvent,
+  } = props;
 
-  onSubmit = (key: string) => {
+  const onSubmit = (key: string) => {
     switch (key) {
       case 'update meeting':
-        this.onUpdateEvent();
+        onUpdateEvent();
         break;
       case 'new meeting':
-        this.onNewEvent();
+        onNewEvent();
         break;
       default:
         console.log(`onSubmit - wrong key: ${key}`);
     }
   };
 
-  onNewEvent = () => {
-    const { userMeetingCalendar } = this.state;
-    const tmpValues = userMeetingCalendar.buffer;
-    const id = userMeetingCalendar.userEvents.length;
-    const { title, start, end } = tmpValues;
-    const newEvent = {
+  const onNewEvent = () => {
+    const id = userEvents.length;
+    const { title, start, end } = userBuffer;
+    const newMeeting = {
       id,
       title,
       start,
       end,
     };
-    userMeetingCalendar.userEvents.push(newEvent);
-    this.setState({ userMeetingCalendar });
-    this.handleClose();
+    // this.setState({
+    //   userEvents: [
+    //     ...userEvents,
+    //     newMeeting,
+    //   ],
+    // });
+    submitEvent([
+      ...userEvents,
+      newMeeting,
+    ]);
+    handleClose();
   };
 
-  onUpdateEvent = () => {
-    const { userMeetingCalendar } = this.state;
-    const tmpValues = userMeetingCalendar.buffer;
-    const evt = userMeetingCalendar.userEvents[tmpValues.id];
-    evt.title = tmpValues.title;
-    evt.start = tmpValues.start;
-    evt.end = tmpValues.end;
-    this.setState({ userMeetingCalendar });
-    this.handleClose();
+  const onUpdateEvent = () => {
+    const newState = userEvents;
+    const evt = userEvents[userBuffer.id];
+    evt.title = userBuffer.title;
+    evt.start = userBuffer.start;
+    evt.end = userBuffer.end;
+    newState[userBuffer.id] = evt;
+    // this.setState({
+    //   userEvents: newState,
+    // });
+    submitEvent(newState);
+    handleClose();
   };
 
-  onUpdateKeyEvent = (key: string, value: Date) => {
-    const { userMeetingCalendar } = this.state;
-    const { buffer } = userMeetingCalendar;
-    const { start, end } = buffer;
-    let newState = {};
+  const onUpdateFieldEvent = (key: string, value: any) => {
+    const { start, end } = userBuffer;
     switch (key) {
       case 'title':
-        newState = {
-          ...userMeetingCalendar,
-          buffer: {
-            ...buffer,
-            title: value,
-          },
-        };
-        this.setState({ userMeetingCalendar: newState });
+        // this.setState({
+        //   userBuffer: {
+        //     ...userBuffer,
+        //     title: value,
+        //   },
+        // });
+        updateField('title', value);
         break;
       case 'start date':
-        newState = {
-          ...userMeetingCalendar,
-          buffer: {
-            ...buffer,
-            start: rebuildDate(start, value),
-          },
-        };
-        this.setState({ userMeetingCalendar: newState });
+        // this.setState({
+        //   userBuffer: {
+        //     ...userBuffer,
+        //     start: rebuildDate(start, value),
+        //   },
+        // });
+        updateField('start', rebuildDate(start, value));
         break;
       case 'end date':
-        newState = {
-          ...userMeetingCalendar,
-          buffer: {
-            ...buffer,
-            end: rebuildDate(end, value),
-          },
-        };
-        this.setState({ userMeetingCalendar: newState });
+        // this.setState({
+        //   userBuffer: {
+        //     ...userBuffer,
+        //     end: rebuildDate(end, value),
+        //   },
+        // });
+        updateField('end', rebuildDate(start, value));
         break;
       case 'start time':
-        newState = {
-          ...userMeetingCalendar,
-          buffer: {
-            ...buffer,
-            start: rebuildTime(start, value),
-          },
-        };
-        this.setState({ userMeetingCalendar: newState });
+        // this.setState({
+        //   userBuffer: {
+        //     ...userBuffer,
+        //     start: rebuildTime(start, value),
+        //   },
+        // });
+        updateField('start', rebuildTime(start, value));
         break;
       case 'end time':
-        newState = {
-          ...userMeetingCalendar,
-          buffer: {
-            ...buffer,
-            end: rebuildTime(end, value),
-          },
-        };
-        this.setState({ userMeetingCalendar: newState });
+        // this.setState({
+        //   userBuffer: {
+        //     ...userBuffer,
+        //     end: rebuildTime(end, value),
+        //   },
+        // });
+        updateField('end', rebuildTime(end, value));
         break;
       default:
-        console.log(`onUpdateKeyEvent - wrong key: ${key}`);
+        console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
   };
 
-  handleOpen = (event: Object) => {
-    const { userMeetingCalendar } = this.state;
-    userMeetingCalendar.buffer = event;
-    // if new meeting
-    if (!event.title) {
-      userMeetingCalendar.buffer.title = defaultTitle;
-      userMeetingCalendar.open.newMeetingModal = true;
-    } else { // update an existing meeting
-      userMeetingCalendar.open.updateMeetingModal = true;
-    }
-    this.setState({ userMeetingCalendar });
+  const handleOpen = (event: Object) => {
+    // const buffer = event;
+    // let openNew = false;
+    // let openUpdate = false;
+    // if (!event.title) { // if new meeting
+    //   buffer.title = defaultTitle;
+    //   openNew = true;
+    // } else { // update an existing meeting
+    //   openUpdate = true;
+    // }
+    // this.setState({
+    //   userBuffer: buffer,
+    //   userOpenNew: openNew,
+    //   userOpenUpdate: openUpdate,
+    // });
+    const kind = !event.title ? 'new meeting' : 'update meeting';
+    openModal(kind, event);
   };
 
-  handleClose = () => {
-    const { userMeetingCalendar } = this.state;
-    userMeetingCalendar.open.updateMeetingModal = false;
-    userMeetingCalendar.open.newMeetingModal = false;
-    this.setState({ userMeetingCalendar });
+  const handleClose = () => {
+    // this.setState({
+    //   userOpenNew: false,
+    //   userOpenUpdate: false,
+    //   userBuffer: {},
+    // });
+    closeModal();
   };
 
-  render() {
-    const {
-      userEvents,
-      buffer,
-      open,
-    } = this.state.userMeetingCalendar;
-
-    return (
-      <div className="App">
-        <Navbar />
-        <BigCalendar
-          selectable
-          events={userEvents}
-          defaultView="week"
-          scrollToTime={new Date(1970, 1, 1, 6)}
-          defaultDate={new Date(2015, 3, 12)}
-          onSelectEvent={this.handleOpen}
-          onSelectSlot={this.handleOpen}
+  return (
+    <div className="App">
+      <Navbar />
+      <BigCalendar
+        selectable
+        events={userEvents}
+        defaultView="week"
+        scrollToTime={new Date(1970, 1, 1, 6)}
+        defaultDate={new Date(2015, 3, 12)}
+        onSelectEvent={handleOpen}
+        onSelectSlot={handleOpen}
+      />
+      <Dialog
+        modal={false}
+        open={userOpenNew || userOpenUpdate}
+        onRequestClose={handleClose}
+        autoScrollBodyContent={true}
+      >
+        <Modal
+          userOpenNew={userOpenNew}
+          userBuffer={userBuffer}
+          onUpdateFieldEvent={onUpdateFieldEvent}
+          handleClose={handleClose}
+          onSubmit={onSubmit}
         />
-        <Dialog
-          modal={false}
-          open={open.updateMeetingModal || open.newMeetingModal}
-          onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}
-        >
-          <Modal
-            open={open}
-            buffer={buffer}
-            onUpdateKeyEvent={this.onUpdateKeyEvent}
-            handleClose={this.handleClose}
-            onSubmit={this.onSubmit}
-          />
-        </Dialog>
-      </div>
-    );
-  }
-}
+      </Dialog>
+    </div>
+  );
+};
 
 export default AppUI;

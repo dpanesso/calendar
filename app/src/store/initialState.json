@@ -1,10 +1,6 @@
 {
-  "userMeetingCalendar": {
-    "open": {
-      "updateMeetingModal": false,
-      "newMeetingModal": false
-    },
-    "buffer": {},
-    "userEvents": []
-  }
+  "userOpenNew": false,
+  "userOpenUpdate": false,
+  "userBuffer": {},
+  "userEvents": []
 }

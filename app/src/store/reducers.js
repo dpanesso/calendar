@@ -1,20 +1,60 @@
 // @flow
 import { combineReducers } from 'redux';
-import { C } from '../constants';
+import { C, defaultTitle } from '../constants';
 
-export const userMeetingCalendar = (state: Object = {}, action: Object) => {
+export const userOpenNew = (state: boolean = false, action: Object) => {
   switch (action.type) {
+    case C.OPEN_USER_MODAL:
+      return action.payload.kind === 'new meeting';
+    case C.CLOSE_USER_MODAL:
+      return false;
+    default:
+      return state;
+  }
+};
 
-    case C.START_MEETING_UPDATE:
-      const type = action.payload.type;
+export const userOpenUpdate = (state: boolean = false, action: Object) => {
+  switch (action.type) {
+    case C.OPEN_USER_MODAL:
+      return action.payload.kind === 'update meeting';
+    case C.CLOSE_USER_MODAL:
+      return false;
+    default:
+      return state;
+  }
+};
 
-      return state
+export const userBuffer = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.OPEN_USER_MODAL: {
+      const { event, kind } = action.payload;
+      return kind === 'new' ? // 2 possible values: new or update
+        event :
+        {
+          ...event,
+          title: defaultTitle,
+        };
+    }
 
-      case C.FIELD_UPDATE:
-      return state
+    case C.UPDATE_FIELD: {
+      const { field, value } = action.payload;
+      const newState = Object.assign({}, state);
+      newState[field] = value;
+      return newState;
+    }
 
-    case C.ON_SUBMIT:
-      return state
+    case C.CLOSE_USER_MODAL:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+export const userEvents = (state: Array<Object> = [], action: Object) => {
+  switch (action.type) {
+    case C.SUBMIT_MEETING:
+      return action.payload;
 
     default:
       return state;
@@ -22,5 +62,8 @@ export const userMeetingCalendar = (state: Object = {}, action: Object) => {
 };
 
 export default combineReducers({
-  userMeetingCalendar,
+  userOpenNew,
+  userOpenUpdate,
+  userBuffer,
+  userEvents,
 });

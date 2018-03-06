@@ -7,12 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { defaultTitle } from '../../constants';
 
 type Props = {
-  buffer: {
-    title: string,
-    start: Date,
-    end: Date
-  },
-  onUpdateKeyEvent: Function,
+  userBuffer: Object,
+  onUpdateFieldEvent: Function,
   onSubmit: Function,
   handleClose: Function,
   type: string,
@@ -20,8 +16,8 @@ type Props = {
 
 const ModalEvent = (props: Props) => {
   const {
-    buffer,
-    onUpdateKeyEvent,
+    userBuffer,
+    onUpdateFieldEvent,
     onSubmit,
     handleClose,
     type,
@@ -30,7 +26,7 @@ const ModalEvent = (props: Props) => {
     title,
     start,
     end,
-  } = buffer;
+  } = userBuffer;
 
   return (
     <div>
@@ -39,14 +35,14 @@ const ModalEvent = (props: Props) => {
         hintText="title"
         floatingLabelText="title"
         defaultValue={title || defaultTitle}
-        onChange={(evt, value) => onUpdateKeyEvent('title', value)}
+        onChange={(evt, value) => onUpdateFieldEvent('title', value)}
       />
       <DatePicker
         name="start date"
         hintText="start date"
         floatingLabelText="start date"
-        defaultDate={start}
-        onChange={(evt, value) => onUpdateKeyEvent('start date', value)}
+        defaultDate={start || new Date()}
+        onChange={(evt, value) => onUpdateFieldEvent('start date', value)}
       />
       <TimePicker
         name="start time"
@@ -55,14 +51,14 @@ const ModalEvent = (props: Props) => {
         minutesStep={30}
         format="24hr"
         defaultTime={new Date(start)}
-        onChange={(evt, value) => onUpdateKeyEvent('start time', value)}
+        onChange={(evt, value) => onUpdateFieldEvent('start time', value)}
       />
       <DatePicker
         name="end date"
         hintText="end sate"
         floatingLabelText="end date"
-        defaultDate={end}
-        onChange={(evt, value) => onUpdateKeyEvent('end date', value)}
+        defaultDate={end || new Date()}
+        onChange={(evt, value) => onUpdateFieldEvent('end date', value)}
       />
       <TimePicker
         name="end time"
@@ -71,7 +67,7 @@ const ModalEvent = (props: Props) => {
         minutesStep={30}
         format="24hr"
         defaultTime={new Date(end)}
-        onChange={(evt, value) => onUpdateKeyEvent('end time', value)}
+        onChange={(evt, value) => onUpdateFieldEvent('end time', value)}
       />
       <RaisedButton
         label="Cancel"
