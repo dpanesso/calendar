@@ -1,4 +1,20 @@
 {
+  "isLoginModalOpen": false,
+  "tabvalue": "a",
+  "loginLoader": false,
+  "loginErrors": {},
+  "login": {
+    "email": "",
+    "password": ""
+  },
+  "signupLoader": false,
+  "signupErrors": {},
+  "signup": {
+    "username": "",
+    "email": "",
+    "password": "",
+    "confirmPassword": ""
+  },
   "userOpenNew": false,
   "userOpenUpdate": false,
   "userBuffer": {},

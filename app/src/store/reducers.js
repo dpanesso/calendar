@@ -1,6 +1,93 @@
 // @flow
 import { combineReducers } from 'redux';
-import { C, defaultTitle } from '../constants';
+import { C, defaultTitle, emptyLogin, emptySignup } from '../constants';
+
+
+export const isLoginModalOpen = (state: boolean = false, action: Object) => {
+  switch (action.type) {
+    case C.OPEN_LOGIN_MODAL:
+      return true;
+    case C.CLOSE_LOGIN_MODAL:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const tabvalue = (state: string = 'a', action: Object) => {
+  switch (action.type) {
+    case C.TAB_CHANGE:
+      return state === 'a' ? 'b' : 'a';
+    default:
+      return state;
+  }
+};
+
+export const loginLoader = (state: boolean = false, action: Object) => {
+  switch (action.type) {
+    case C.SUBMIT_LOGIN:
+      return true;
+    case C.SUCCESS_LOGIN:
+      return false;
+    case C.FAIL_LOGIN:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const signupLoader = (state: boolean = false, action: Object) => {
+  switch (action.type) {
+    case C.SUBMIT_SIGNUP:
+      return true;
+    case C.SUCCESS_SIGNUP:
+      return false;
+    case C.FAIL_SIGNUP:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const loginErrors = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.FAIL_LOGIN:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const signupErrors = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.FAIL_SIGNUP:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const login = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.UPDATE_LOGIN_FIELD:
+      return action.payload;
+    case C.CLOSE_LOGIN_MODAL:
+      return emptyLogin;
+    default:
+      return state;
+  }
+};
+
+export const signup = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.UPDATE_SIGNUP_FIELD:
+      return action.payload;
+    case C.CLOSE_LOGIN_MODAL:
+      return emptySignup;
+    default:
+      return state;
+  }
+};
 
 export const userOpenNew = (state: boolean = false, action: Object) => {
   switch (action.type) {
@@ -60,6 +147,14 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
 };
 
 export default combineReducers({
+  tabvalue,
+  loginLoader,
+  loginErrors,
+  login,
+  signupLoader,
+  signupErrors,
+  signup,
+  isLoginModalOpen,
   userOpenNew,
   userOpenUpdate,
   userBuffer,

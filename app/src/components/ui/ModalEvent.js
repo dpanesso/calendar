@@ -40,7 +40,7 @@ const ModalEvent = (props: Props) => {
         name="start date"
         hintText="start date"
         floatingLabelText="start date"
-        defaultDate={start || new Date()}
+        defaultDate={new Date(start)}
         onChange={(evt, value) => onUpdateFieldEvent('start date', value)}
       />
       <TimePicker
@@ -56,7 +56,7 @@ const ModalEvent = (props: Props) => {
         name="end date"
         hintText="end sate"
         floatingLabelText="end date"
-        defaultDate={end || new Date()}
+        defaultDate={new Date(end)}
         onChange={(evt, value) => onUpdateFieldEvent('end date', value)}
       />
       <TimePicker
@@ -73,7 +73,7 @@ const ModalEvent = (props: Props) => {
         primary={true}
         style={{ marginRight: '20px' }}
         onClick={handleClose}
-      />,
+      />
       <RaisedButton
         label="Submit"
         primary={true}

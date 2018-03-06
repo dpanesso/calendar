@@ -4,7 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import Navbar from './Navbar';
+import Navbar from '../containers/Navbar';
 import Modal from './Modal';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import parseDates from '../../utils/parseDates';
@@ -125,6 +125,7 @@ const AppUI = (props: Props) => {
         open={userOpenNew || userOpenUpdate}
         onRequestClose={handleClose}
         autoScrollBodyContent={true}
+        contentStyle={{ width: '350px' }}
       >
         <Modal
           userOpenNew={userOpenNew}

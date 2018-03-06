@@ -7,28 +7,32 @@ import SignUpButton from './SignUpButton';
 type Props = {
   onChange: Function,
   onSubmit: Function,
-  signUp: Object,
+  signupLoader: boolean,
+  signupErrors: Object,
 }
 
 const SignUpForm = (props: Props) => {
-  const { onChange, onSubmit, signUp } = props;
-  const { errors } = signUp;
-  const { loading } = signUp;
+  const {
+    onChange,
+    onSubmit,
+    signupLoader,
+    signupErrors,
+  } = props;
   return (
     <div>
-      {errors.summary && <p className="error-message">☢ {errors.summary}</p>}
+      {signupErrors.summary && <p className="error-message">☢ {signupErrors.summary}</p>}
       <TextField
         name="username"
         hintText="username"
         floatingLabelText="username"
-        errorText={errors.username}
+        errorText={signupErrors.username}
         onChange={onChange}
       /><br />
       <TextField
         name="email"
         hintText="email"
         floatingLabelText="email"
-        errorText={errors.email}
+        errorText={signupErrors.email}
         onChange={onChange}
       /><br />
       <TextField
@@ -37,19 +41,19 @@ const SignUpForm = (props: Props) => {
         floatingLabelText="password"
         floatingLabelStyle={styles.gray}
         floatingLabelFocusStyle={styles.blue}
-        errorText={errors.password ? errors.password : 'Use at least 8 characters, 1 number, 1 upper and 1 lowercase'}
-        errorStyle={errors.password ? {} : styles.gray}
+        errorText={signupErrors.password ? signupErrors.password : 'Use at least 8 characters, 1 number, 1 upper and 1 lowercase'}
+        errorStyle={signupErrors.password ? {} : styles.gray}
         onChange={onChange}
       /><br />
       <TextField
         name="confirmPassword"
         hintText="confirm password"
         floatingLabelText="confirm password"
-        errorText={errors.confirmPassword}
+        errorText={signupErrors.confirmPassword}
         onChange={onChange}
       /><br />
       <SignUpButton
-        suLoading={loading}
+        suLoading={signupLoader}
         signUpUser={onSubmit}
         styles={styles}
       />

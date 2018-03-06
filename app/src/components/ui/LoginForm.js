@@ -7,16 +7,20 @@ import SignInButton from './LoginButton';
 type Props = {
   onChange: Function,
   onSubmit: Function,
-  login: Object,
+  loginLoader: boolean,
+  loginErrors: Object,
 }
 
 const SignInForm = (props: Props) => {
-  const { onChange, onSubmit, login } = props;
-  const { errors } = login;
-  const { loading } = login;
+  const {
+    onChange,
+    onSubmit,
+    loginLoader,
+    loginErrors,
+  } = props;
   return (
     <div>
-      {errors.summary && <p className="error-message">☢ {errors.summary}</p>}
+      {loginErrors.summary && <p className="error-message">☢ {loginErrors.summary}</p>}
       <TextField
         name="email"
         hintText="email"
@@ -31,7 +35,7 @@ const SignInForm = (props: Props) => {
       /><br />
       <a href="#" style={styles.text}>Forgot your password?</a>
       <SignInButton
-        siLoading={loading}
+        siLoading={loginLoader}
         signInUser={onSubmit}
         styles={styles}
       />
