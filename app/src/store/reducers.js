@@ -27,13 +27,11 @@ export const userOpenUpdate = (state: boolean = false, action: Object) => {
 export const userBuffer = (state: Object = {}, action: Object) => {
   switch (action.type) {
     case C.OPEN_USER_MODAL: {
-      const { event, kind } = action.payload;
-      return kind === 'new' ? // 2 possible values: new or update
-        event :
-        {
-          ...event,
-          title: defaultTitle,
-        };
+      const { kind, event } = action.payload;
+      return kind === 'new meeting' ? {
+        ...event,
+        title: defaultTitle,
+      } : event;
     }
 
     case C.UPDATE_FIELD: {

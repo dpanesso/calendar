@@ -7,6 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from './Navbar';
 import Modal from './Modal';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
+import parseDates from '../../utils/parseDates';
 import '../../styles/calendar.css';
 
 // Setup the localizer by providing the moment (or globalize) Object
@@ -36,19 +37,14 @@ const AppUI = (props: Props) => {
     submitEvent,
   } = props;
 
-  const onSubmit = (key: string) => {
-    switch (key) {
-      case 'update meeting':
-        onUpdateEvent();
-        break;
-      case 'new meeting':
-        onNewEvent();
-        break;
-      default:
-        console.log(`onSubmit - wrong key: ${key}`);
-    }
+  const handleOpen = (event: Object) => {
+    const kind = !event.title ? 'new meeting' : 'update meeting';
+    openModal(kind, event);
   };
 
+  const handleClose = () => {
+    closeModal();
+  };
   const onNewEvent = () => {
     const id = userEvents.length;
     const { title, start, end } = userBuffer;
@@ -58,12 +54,6 @@ const AppUI = (props: Props) => {
       start,
       end,
     };
-    // this.setState({
-    //   userEvents: [
-    //     ...userEvents,
-    //     newMeeting,
-    //   ],
-    // });
     submitEvent([
       ...userEvents,
       newMeeting,
@@ -78,92 +68,44 @@ const AppUI = (props: Props) => {
     evt.start = userBuffer.start;
     evt.end = userBuffer.end;
     newState[userBuffer.id] = evt;
-    // this.setState({
-    //   userEvents: newState,
-    // });
     submitEvent(newState);
     handleClose();
+  };
+
+  const onSubmit = (key: string) => {
+    switch (key) {
+      case 'update meeting':
+        onUpdateEvent();
+        break;
+      case 'new meeting':
+        onNewEvent();
+        break;
+      default:
+        console.log(`onSubmit - wrong key: ${key}`);
+    }
   };
 
   const onUpdateFieldEvent = (key: string, value: any) => {
     const { start, end } = userBuffer;
     switch (key) {
       case 'title':
-        // this.setState({
-        //   userBuffer: {
-        //     ...userBuffer,
-        //     title: value,
-        //   },
-        // });
         updateField('title', value);
         break;
       case 'start date':
-        // this.setState({
-        //   userBuffer: {
-        //     ...userBuffer,
-        //     start: rebuildDate(start, value),
-        //   },
-        // });
-        updateField('start', rebuildDate(start, value));
+        updateField('start', rebuildDate(start, value).toString());
         break;
       case 'end date':
-        // this.setState({
-        //   userBuffer: {
-        //     ...userBuffer,
-        //     end: rebuildDate(end, value),
-        //   },
-        // });
-        updateField('end', rebuildDate(start, value));
+        updateField('end', rebuildDate(start, value).toString());
         break;
       case 'start time':
-        // this.setState({
-        //   userBuffer: {
-        //     ...userBuffer,
-        //     start: rebuildTime(start, value),
-        //   },
-        // });
-        updateField('start', rebuildTime(start, value));
+        updateField('start', rebuildTime(start, value).toString());
         break;
       case 'end time':
-        // this.setState({
-        //   userBuffer: {
-        //     ...userBuffer,
-        //     end: rebuildTime(end, value),
-        //   },
-        // });
-        updateField('end', rebuildTime(end, value));
+        updateField('end', rebuildTime(end, value).toString());
         break;
       default:
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
-  };
-
-  const handleOpen = (event: Object) => {
-    // const buffer = event;
-    // let openNew = false;
-    // let openUpdate = false;
-    // if (!event.title) { // if new meeting
-    //   buffer.title = defaultTitle;
-    //   openNew = true;
-    // } else { // update an existing meeting
-    //   openUpdate = true;
-    // }
-    // this.setState({
-    //   userBuffer: buffer,
-    //   userOpenNew: openNew,
-    //   userOpenUpdate: openUpdate,
-    // });
-    const kind = !event.title ? 'new meeting' : 'update meeting';
-    openModal(kind, event);
-  };
-
-  const handleClose = () => {
-    // this.setState({
-    //   userOpenNew: false,
-    //   userOpenUpdate: false,
-    //   userBuffer: {},
-    // });
-    closeModal();
   };
 
   return (
@@ -171,7 +113,7 @@ const AppUI = (props: Props) => {
       <Navbar />
       <BigCalendar
         selectable
-        events={userEvents}
+        events={parseDates(userEvents)}
         defaultView="week"
         scrollToTime={new Date(1970, 1, 1, 6)}
         defaultDate={new Date(2015, 3, 12)}

@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import { defaultTitle } from '../../constants';
 
 type Props = {
   userBuffer: Object,
@@ -34,7 +33,7 @@ const ModalEvent = (props: Props) => {
         name="title"
         hintText="title"
         floatingLabelText="title"
-        defaultValue={title || defaultTitle}
+        defaultValue={title}
         onChange={(evt, value) => onUpdateFieldEvent('title', value)}
       />
       <DatePicker
