@@ -36,9 +36,8 @@ describe('Database queries', () => {
   });
 
   it('Get user data', () => {
-    const mockUser = mock.dbUser;
     getUserById(email).then((user) => {
-      expect(user).to.equal(mockUser);
+      expect(user).to.equal(mock.user);
     });
   });
 });

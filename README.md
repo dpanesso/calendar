@@ -17,7 +17,7 @@ TBD
 ## Run with Docker
 * Install [Docker](https://www.docker.com/), launch docker-compose, and check the logs until the services are running.
 ```bash
-docker-compose up -d && docker-compose logs -f -t
+yarn start-docker
 ```
 > App running on http://localhost and Redis Commander running on http://localhost:8081
 
