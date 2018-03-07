@@ -6,12 +6,14 @@ import {
   updateUserField,
   submitUserEvent,
   updateUserData,
+  toggleDapp,
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
 
 const mapStateToProps = state => (
   {
+    toggleDapp: state.toggleDapp,
     userOpenNew: state.userOpenNew,
     userOpenUpdate: state.userOpenUpdate,
     userBuffer: state.userBuffer,
@@ -36,6 +38,7 @@ const mapDispatchToProps = dispatch => (
     },
     submitEvent(event) {
       dispatch(submitUserEvent(event));
+      dispatch(toggleDapp())
     },
   }
 );

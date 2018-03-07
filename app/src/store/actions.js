@@ -95,3 +95,8 @@ export const submitUserEvent = (event: Object) => (
     type: C.SUBMIT_MEETING,
     payload: event,
   });
+
+  export const toggleDapp = () => (
+    {
+      type: C.TOGGLE_DAPP,
+    });
