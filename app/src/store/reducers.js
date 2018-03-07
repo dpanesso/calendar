@@ -3,6 +3,15 @@ import { combineReducers } from 'redux';
 import { C, defaultTitle, emptyLogin, emptySignup } from '../constants';
 
 
+export const user = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.UPDATE_USER:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export const isLoginModalOpen = (state: boolean = false, action: Object) => {
   switch (action.type) {
     case C.OPEN_LOGIN_MODAL:
@@ -147,6 +156,7 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
 };
 
 export default combineReducers({
+  user,
   tabvalue,
   loginLoader,
   loginErrors,

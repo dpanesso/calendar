@@ -31,7 +31,7 @@ it('customFetch', () => {
 const prefix = Math.random().toString(36).substring(7);
 const email = `${prefix}@gmail.com`;
 // only works when API is running
-it('customPost - signup', () => {
+it('customPost - signup ', () => {
   const url = prefixURL('api/auth/signup');
   const postData = {
     username: 'TheSnake',
@@ -39,9 +39,12 @@ it('customPost - signup', () => {
     password: 'Thesnake6',
     confirmPassword: 'Thesnake6',
   };
-  return customPost(url, postData).then(data => (
-    expect(data).toEqual({})
-  ));
+  return customPost(url, postData).then((data) => {
+    console.log('|||||||||||| SIGN UP ||||||||||||');
+    console.log(data);
+    console.log('|||||||||||| SIGN UP ||||||||||||');
+    expect(data).toEqual({});
+  });
 });
 
 // only works when API is running
@@ -52,7 +55,10 @@ it('customPost - login', () => {
     email,
     password,
   };
-  return customPost(url, postData).then(data => (
-    expect(data).toEqual({})
-  ));
+  return customPost(url, postData).then((data) => {
+    console.log('|||||||||||| LOGIN ||||||||||||');
+    console.log(data);
+    console.log('|||||||||||| LOGIN ||||||||||||');
+    expect(data.token.length).toBeGreaterThanOrEqual(200);
+  });
 });

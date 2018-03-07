@@ -5,6 +5,7 @@ import {
   closeUserModal,
   updateUserField,
   submitUserEvent,
+  updateUserData,
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
@@ -15,11 +16,15 @@ const mapStateToProps = state => (
     userOpenUpdate: state.userOpenUpdate,
     userBuffer: state.userBuffer,
     userEvents: state.userEvents,
+    user: state.user,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
+    updateUser(user) {
+      dispatch(updateUserData(user));
+    },
     openModal(kind, event) {
       dispatch(openUserModal(kind, event));
     },

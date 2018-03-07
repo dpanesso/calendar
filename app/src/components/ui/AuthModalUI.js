@@ -34,6 +34,7 @@ type Props = {
   submitSignup: Function,
   successSignup: Function,
   failSignup: Function,
+  updateUser: Function,
 };
 
 class AuthModalUI extends Component<Props> {
@@ -62,10 +63,14 @@ class AuthModalUI extends Component<Props> {
     const url = prefixURL('api/auth/login');
     customPost(url, formData)
       .then((response) => {
+        if (response.token) {
+          console.log(response.token);
+        }
         const errors = response.errors ? response.errors : {};
         if (errors.summary) this.props.failLogin(errors);
         if (response.user) {
-          this.props.successLogin(response.user);
+          this.props.successLogin();
+          this.props.updateUser(response.user);
           this.props.closeModal();
         }
       })

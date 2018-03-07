@@ -2,6 +2,12 @@
 import { C } from '../constants';
 
 
+export const updateUserData = (user: Object) => (
+  {
+    type: C.UPDATE_USER,
+    payload: user,
+  });
+
 export const openLoginModal = () => (
   {
     type: C.OPEN_LOGIN_MODAL,

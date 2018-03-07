@@ -1,4 +1,4 @@
-#navbar {
+.navbar {
   width: 100%;
   height: 60px;
   background-color: #818183;
@@ -8,17 +8,17 @@
   justify-content: flex-end;
 }
 
-#navbar ul {
+.navbar ul {
   list-style: none;
   display: flex;
   margin-right: 200px;
 }
 
-#navbar li {
+.navbar li {
   margin: 0 25px;
 }
 
-#navbar p {
+.navbar p {
   color: white;
   font-size: 15px;
   font-weight: bold;
@@ -29,10 +29,9 @@
   flex: auto;
 }
 
-#navbar p:hover {
+.navbar p:hover {
   color: #f9a799;
   cursor: pointer;
-  border-bottom: solid 3px #f9a799;
 }
 
 #loginButton {
