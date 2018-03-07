@@ -16,6 +16,7 @@ const processSignupForm = (payload: Object): Promise<Object> => new Promise((res
   } = payload;
   isValidEmail(email)
     .then((emailValid) => {
+      console.log(emailValid);
       if (!payload || typeof email !== 'string' || !emailValid) {
         isFormValid = false;
         errors.email = 'Email is invalid or already taken.';

@@ -1,8 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
-const initializeRedisData = require('./services/database/initializeRedisData');
 const morgan = require('morgan');
+// const fs = require('fs');
+// const path = require('path');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
@@ -11,12 +12,12 @@ const routes = require('./routes');
 const config = require('./config');
 
 
-// fetch historical data from various APIs and initialize REDIS with that data
-initializeRedisData();
-
 const app = express();
-// log requests in the console
+// log requests in the console and in filesystem
 app.use(morgan('dev'));
+// app.use(morgan('common', {
+//   stream: fs.createWriteStream(path.join(__dirname, '/log/access.log'), { flags: 'a' }),
+// }));
 // Helmet is a collection of 12 middleware to help set some security headers.
 app.use(helmet());
 // enable cross origin requests

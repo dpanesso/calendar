@@ -27,6 +27,8 @@ export const tabvalue = (state: string = 'a', action: Object) => {
   switch (action.type) {
     case C.TAB_CHANGE:
       return state === 'a' ? 'b' : 'a';
+    case C.SUCCESS_SIGNUP:
+      return 'a';
     default:
       return state;
   }
@@ -66,6 +68,8 @@ export const loginErrors = (state: Object = {}, action: Object) => {
   switch (action.type) {
     case C.FAIL_LOGIN:
       return action.payload;
+    case C.CLOSE_LOGIN_MODAL:
+      return {};
     default:
       return state;
   }
@@ -75,6 +79,8 @@ export const signupErrors = (state: Object = {}, action: Object) => {
   switch (action.type) {
     case C.FAIL_SIGNUP:
       return action.payload;
+    case C.CLOSE_LOGIN_MODAL:
+      return {};
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 const express = require('express');
-const { processSignupForm } = require('../services/authentication/helpers');
+const processSignupForm = require('../services/authentication/signup');
 const {
   verifyUser,
   generateToken,
@@ -16,9 +16,11 @@ router.post('/signup', (req, res) => {
           errors: result.errors,
         });
       }
-      return res.status(200).send({}).end();
+      return res.status(200).send({ success: 'Account successfully created' }).end();
     })
-    .catch(err => throw new Error(err.message));
+    .catch((err) => {
+      throw new Error(err.message);
+    });
 });
 
 router.post(

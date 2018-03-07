@@ -35,34 +35,28 @@ describe('Endpoints', () => {
   const email = `${prefix}@gmail.com`;
   // only works when API is running
   test('Signup', () => {
-    const url = prefixURL('api/signup');
+    const url = prefixURL('api/pub/signup');
     const postData = {
       username: 'TheSnake',
       email,
       password: 'Thesnake6',
       confirmPassword: 'Thesnake6',
     };
-    return customPost(url, postData).then((data) => {
-      console.log('|||||||||||| SIGN UP ||||||||||||');
-      console.log(data);
-      console.log('|||||||||||| SIGN UP ||||||||||||');
+    return customPost(url, postData, '').then((data) => {
       expect(data).toEqual({});
     });
   });
 
   // only works when API is running
   test('Login', () => {
-    const url = prefixURL('api/auth/login');
+    const url = prefixURL('api/pub/login');
     const password = encrypt('Thesnake6', email);
     const postData = {
       email,
       password,
     };
-    return customPost(url, postData, '').then((err, data) => {
-      console.log('|||||||||||| LOGIN ||||||||||||');
-      console.log(data);
-      console.log('|||||||||||| LOGIN ||||||||||||');
-      expect(data.user.token.length).toBeGreaterThanOrEqual(200);
+    return customPost(url, postData, '').then(data => {
+      expect(data.user.token.length).toBeGreaterThanOrEqual(20);
     });
   });
 });

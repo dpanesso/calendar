@@ -71,7 +71,7 @@ class AuthModalUI extends Component<Props> {
         if (response.user) {
           this.props.successLogin();
           if (response.user.token) {
-            localStorage.access_token = response.user.token;
+            // localStorage.access_token = response.user.token;
           }
           this.props.updateUser(response.user);
           this.props.closeModal();
@@ -107,10 +107,8 @@ class AuthModalUI extends Component<Props> {
       .then((response) => {
         const errors = response.errors ? response.errors : {};
         if (errors.summary) this.props.failSignup(errors);
-        if (response.user) {
-          this.props.successSignup();
-          this.props.changeTab();
-        }
+        this.props.successSignup();
+        this.props.changeTab();
       })
       .catch((error) => {
         console.log(error);
