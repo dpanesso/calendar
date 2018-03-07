@@ -6,7 +6,7 @@ const { getUserById } = require('../database/queries');
 // regexp messing with eslint
 /* eslint no-useless-escape: "off" */
 
-const isValidEmail = (email: string): Promise<boolean> => new Promise((resolve) => {
+const isValidEmail = (email: string): Promise<boolean> => new Promise((resolve, reject) => {
   let isValid = true;
   if (!validator.isEmail(email)) {
     isValid = false;
@@ -17,14 +17,9 @@ const isValidEmail = (email: string): Promise<boolean> => new Promise((resolve) 
       if (reply !== null) isValid = false;
       resolve(isValid);
     })
-    .catch((e) => {
-      throw new Error(e.message);
+    .catch((err) => {
+      reject(err);
     });
-  // client.hgetall(`user:${email}`, (err, reply) => {
-  //   if (err) console.log(err);
-  //   if (reply !== null) isValid = false;
-  //   resolve(isValid);
-  // });
 });
 
 const validPassword = (user: Object, formPassword: string) => {
