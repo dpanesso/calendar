@@ -1,14 +1,15 @@
 // @flow
 const { encrypt, encryptSHA } = require('../../utils/encrypt');
 const client = require('./redisClient');
-const redis = require('redis');
 
-const createUser = (username: string, email: string, password: string) => {
+const createUser = (username: string, email: string, password: string): Promise<any> => new Promise((resolve, reject) => {
   const SHApwd = encryptSHA(password, email);
   const HASHpwd = encrypt(SHApwd);
-  client.hmset(`user:${email}`, 'HASHpwd', HASHpwd, 'email', email, 'username', username, redis.print);
-  client.hgetall(`user:${email}`, (err, obj) => console.log(obj));
-};
+  client.hmset(`user:${email}`, ['HASHpwd', HASHpwd, 'email', email, 'username', username], (err, reply) => {
+    if (err) reject(err);
+    resolve(reply);
+  });
+});
 
 const getUserById = (email: string): Promise<any> => new Promise((resolve, reject) => {
   client.hgetall(`user:${email}`, (err, reply) => {

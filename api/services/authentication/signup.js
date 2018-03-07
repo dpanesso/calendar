@@ -5,7 +5,7 @@ const { createUser } = require('../database/queries');
 /**
  * Validate and process the sign up form
  */
-const processSignupForm = (payload: Object): Promise<Object> => new Promise((resolve) => {
+const processSignupForm = (payload: Object): Promise<Object> => new Promise((resolve, reject) => {
   const errors = {};
   let isFormValid = true;
   const {
@@ -38,18 +38,27 @@ const processSignupForm = (payload: Object): Promise<Object> => new Promise((res
 
       if (!isFormValid) {
         errors.summary = 'Check the form for errors.';
+        const result = {
+          success: isFormValid,
+          errors,
+        };
+        resolve(result);
       } else {
-        createUser(username, email, password);
+        createUser(username, email, password)
+          .then((reply) => {
+            console.log('||||||||||||||||||||||||||| CREATE USER |||||||||');
+            console.log(reply);
+            const result = {
+              success: isFormValid,
+              errors,
+            };
+            resolve(result);
+          })
+          .catch(err => reject(err));
       }
-
-      const result = {
-        success: isFormValid,
-        errors,
-      };
-      resolve(result);
     })
-    .catch((e) => {
-      throw new Error(e.message);
+    .catch((err) => {
+      reject(err);
     });
 });
 

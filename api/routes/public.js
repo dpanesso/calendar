@@ -8,15 +8,17 @@ const {
 const router = new express.Router();
 
 router.post('/signup', (req, res) => {
-  processSignupForm(req.body).then((result) => {
-    if (!result.success) {
-      return res.status(400).json({
-        success: false,
-        errors: result.errors,
-      });
-    }
-    return res.status(200).send({}).end();
-  });
+  processSignupForm(req.body)
+    .then((result) => {
+      if (!result.success) {
+        return res.status(400).json({
+          success: false,
+          errors: result.errors,
+        });
+      }
+      return res.status(200).send({}).end();
+    })
+    .catch(err => throw new Error(err.message));
 });
 
 router.post(

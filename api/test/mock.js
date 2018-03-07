@@ -6,11 +6,10 @@ const mock = {
     confirmPassword: 'onEstChampion1998',
   },
   dbUser: {
-    username: 'whiskyCoke',
     email: 'sydneyGovou@quel.attaquant',
-    password: 'onEstChampion1998',
-    confirmPassword: 'onEstChampion1998',
+    username: 'whiskyCoke',
   },
+  loggedOuttoken: 'My logged out token',
 };
 
 module.exports = mock;

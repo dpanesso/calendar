@@ -34,13 +34,37 @@ describe('Database queries', () => {
     createUser(username, email, password);
   });
 
+  createUser(username, email, password)
+    .then((reply) => {
+      expect(reply).to.equal('OK');
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });
+
   it('Get user data', () => {
     getUserById(email)
       .then((user) => {
-        expect(user).to.equal(mock.user);
+        console.log('|||||||||||||||||||||| GET USER BY ID |||||||||||||||||||');
+        expect(user.email).to.equal(mock.dbUser.email);
+        expect(user.username).to.equal(mock.dbUser.username);
       })
-      .catch((e) => {
-        throw new Error(e.message);
+      .catch((err) => {
+        console.log('|||||||||||||||||||||| THROW |||||||||||||||||||');
+        throw new Error(err.message);
       });
   });
+
+  // it('Add token to blacklist', () => {
+  //   addTokenToBlacklist(mock.loggedOuttoken)
+  //     .then((user) => {
+  //       console.log('|||||||||||||||||||||| GET USER BY ID |||||||||||||||||||');
+  //       expect(user.email).to.equal(mock.dbUser.email);
+  //       expect(user.username).to.equal(mock.dbUser.username);
+  //     })
+  //     .catch((err) => {
+  //       console.log('|||||||||||||||||||||| THROW |||||||||||||||||||');
+  //       throw new Error(err.message);
+  //     });
+  // });
 });
