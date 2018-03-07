@@ -1,10 +1,6 @@
 const express = require('express');
-const { processSignupForm } = require('../services/authentication/signup');
-const {
-  verifyUser,
-  generateToken,
-  validateToken,
-} = require('../services/authentication/middleware');
+const { processSignupForm } = require('../../services/authentication/processForm');
+const strategy = require('../../services/authentication/local-strategy');
 
 const router = new express.Router();
 
@@ -22,16 +18,15 @@ router.post('/signup', (req, res) => {
 
 router.post(
   '/login',
-  verifyUser,
-  generateToken,
-  validateToken,
+  strategy.verifyUser,
+  strategy.generateToken,
+  strategy.validateToken,
   (req, res) => res.status(200).send({
+    token: res.token,
     user: {
       username: res.user.username,
       meetings: {},
-      token: res.token,
     },
   }).end(),
 );
-
 module.exports = router;

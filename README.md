@@ -67,6 +67,6 @@ scripts/AWS/install-docker.sh
 * Clone this repository
 * Launch docker-compose, and check the logs until the services are running.
 ```bash
-yarn start-docker
+docker-compose up -d && docker-compose logs -f -t
 ```
 > App running on your EC2 public DNS (something like http://ec2-39-205-118-100.us-west-2.compute.amazonaws.com/)
