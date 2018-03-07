@@ -29,19 +29,19 @@ cd /my/redis/installation/folder
 make
 src/redis-server
 ```
+* Install dependencies
+```bash
+yarn
+```
 * Start api
 ```bash
-cd api
-yarn
-yarn start
+yarn start-api
 ```
 > Running on http://localhost:4000
 
 * Start app
 ```bash
-cd App
-yarn
-yarn start
+yarn start-app
 ```
 > Running on http://localhost:3000
 

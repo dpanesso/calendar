@@ -1,0 +1,26 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "A meeting room booking system for shared offices.",
+  "author": "JeanKnapik",
+  "scripts": {
+    "postinstall": "cd app && yarn && cd ../api && yarn && cd ../",
+    "start-api": "cd api && yarn start",
+    "start-app": "cd app && yarn start",
+    "start-docker": "docker-compose up -d && docker-compose logs -f -t"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-eslint": "^8.2.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jest": "^21.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "flow-bin": "^0.66.0"
+  }
+}
