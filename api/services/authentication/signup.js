@@ -1,6 +1,6 @@
 // @flow
-const { isValidEmail, isFormatPasswordValid } = require('./formValidationHelpers');
-const createUser = require('../database/queries/createUser');
+const { isValidEmail, isFormatPasswordValid } = require('./helpers');
+const { createUser } = require('../database/queries');
 
 /**
  * Validate and process the sign up form
@@ -47,37 +47,10 @@ const processSignupForm = (payload: Object): Promise<Object> => new Promise((res
         errors,
       };
       resolve(result);
+    })
+    .catch((e) => {
+      throw new Error(e.message);
     });
 });
 
-/**
- * Validate and process the login form
- */
-const processLoginForm = (payload: Object): Promise<Object> => new Promise((resolve) => {
-  const errors = {};
-  let isFormValid = true;
-  const { email, password } = payload;
-
-  if (!payload || typeof email !== 'string' || email.trim().length === 0) {
-    isFormValid = false;
-  }
-
-  if (!payload || typeof password !== 'string' || password.trim().length === 0) {
-    isFormValid = false;
-  }
-
-  if (!isFormValid) {
-    errors.summary = 'Incorrect username or password.';
-  }
-
-  const result = {
-    success: isFormValid,
-    errors,
-  };
-  resolve(result);
-});
-
-module.exports = {
-  processSignupForm,
-  processLoginForm,
-};
+module.exports = processSignupForm;

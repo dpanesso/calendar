@@ -60,8 +60,8 @@ class AuthModalUI extends Component<Props> {
       email,
       password: encryptedPassword,
     };
-    const url = prefixURL('api/auth/login');
-    customPost(url, formData)
+    const url = prefixURL('api/pub/login');
+    customPost(url, formData, '')
       .then((response) => {
         if (response.token) {
           console.log(response.token);
@@ -70,6 +70,9 @@ class AuthModalUI extends Component<Props> {
         if (errors.summary) this.props.failLogin(errors);
         if (response.user) {
           this.props.successLogin();
+          if (response.user.token) {
+            localStorage.access_token = response.user.token;
+          }
           this.props.updateUser(response.user);
           this.props.closeModal();
         }
@@ -99,8 +102,8 @@ class AuthModalUI extends Component<Props> {
       password,
       confirmPassword,
     };
-    const url = prefixURL('api/auth/signup');
-    customPost(url, formData)
+    const url = prefixURL('api/pub/signup');
+    customPost(url, formData, '')
       .then((response) => {
         const errors = response.errors ? response.errors : {};
         if (errors.summary) this.props.failSignup(errors);

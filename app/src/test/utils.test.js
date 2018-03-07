@@ -35,7 +35,7 @@ describe('Endpoints', () => {
   const email = `${prefix}@gmail.com`;
   // only works when API is running
   test('Signup', () => {
-    const url = prefixURL('api/auth/signup');
+    const url = prefixURL('api/signup');
     const postData = {
       username: 'TheSnake',
       email,
@@ -58,11 +58,11 @@ describe('Endpoints', () => {
       email,
       password,
     };
-    return customPost(url, postData).then((data) => {
+    return customPost(url, postData, '').then((err, data) => {
       console.log('|||||||||||| LOGIN ||||||||||||');
       console.log(data);
       console.log('|||||||||||| LOGIN ||||||||||||');
-      expect(data.token.length).toBeGreaterThanOrEqual(200);
+      expect(data.user.token.length).toBeGreaterThanOrEqual(200);
     });
   });
 });

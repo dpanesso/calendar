@@ -40,6 +40,8 @@ export const loginLoader = (state: boolean = false, action: Object) => {
       return false;
     case C.FAIL_LOGIN:
       return false;
+    case C.CLOSE_LOGIN_MODAL:
+      return false;
     default:
       return state;
   }
@@ -52,6 +54,8 @@ export const signupLoader = (state: boolean = false, action: Object) => {
     case C.SUCCESS_SIGNUP:
       return false;
     case C.FAIL_SIGNUP:
+      return false;
+    case C.CLOSE_LOGIN_MODAL:
       return false;
     default:
       return state;

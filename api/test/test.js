@@ -4,8 +4,7 @@
 const { expect } = require('chai');
 const mock = require('./mock');
 const { encrypt, encryptSHA, compareHash } = require('../utils/encrypt');
-const createUser = require('../services/database/queries/createUser');
-const getUserById = require('../services/database/queries/getUserData');
+const { createUser, getUserById } = require('../services/database/queries');
 
 
 describe('Utils functions', () => {
@@ -36,8 +35,12 @@ describe('Database queries', () => {
   });
 
   it('Get user data', () => {
-    getUserById(email).then((user) => {
-      expect(user).to.equal(mock.user);
-    });
+    getUserById(email)
+      .then((user) => {
+        expect(user).to.equal(mock.user);
+      })
+      .catch((e) => {
+        throw new Error(e.message);
+      });
   });
 });

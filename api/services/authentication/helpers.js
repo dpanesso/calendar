@@ -1,7 +1,7 @@
 // @flow
 const validator = require('validator');
 const { compareHash } = require('../../utils/encrypt');
-const getUserbyId = require('../database/queries/getUserData');
+const { getUserById } = require('../database/queries');
 
 // regexp messing with eslint
 /* eslint no-useless-escape: "off" */
@@ -12,10 +12,14 @@ const isValidEmail = (email: string): Promise<boolean> => new Promise((resolve) 
     isValid = false;
     resolve(isValid);
   }
-  getUserbyId(email).then((reply) => {
-    if (reply !== null) isValid = false;
-    resolve(isValid);
-  });
+  getUserById(email)
+    .then((reply) => {
+      if (reply !== null) isValid = false;
+      resolve(isValid);
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
   // client.hgetall(`user:${email}`, (err, reply) => {
   //   if (err) console.log(err);
   //   if (reply !== null) isValid = false;
