@@ -1,6 +1,6 @@
 const express = require('express');
 const { processSignupForm } = require('../../services/authentication/processForm');
-const auth = require('../../services/authentication');
+const strategy = require('../../services/authentication/local-strategy');
 
 const router = new express.Router();
 
@@ -12,25 +12,21 @@ router.post('/signup', (req, res) => {
         errors: result.errors,
       });
     }
-
     return res.status(200).send({}).end();
   });
 });
 
 router.post(
   '/login',
-  auth.authenticate('local'),
-  (req, res) => {
-    console.log('||||||||||||||||||||||||| BEGIN MY RESPONSE |||||||||||||||||||||||');
-    console.log(req.session);
-    console.log('||||||||||||||||||||||||| END MY RESPONSE |||||||||||||||||||||||');
-    res.cookie('access_token', 'my access token', {
-      maxAge: 60 * 60 * 24 * 365 * 10,
-      httpOnly: true,
-    });
-    res.status(200).send({}).end();
-  },
+  strategy.verifyUser,
+  strategy.generateToken,
+  strategy.validateToken,
+  (req, res) => res.status(200).send({
+    token: res.token,
+    user: {
+      username: res.user.username,
+      meetings: {},
+    },
+  }).end(),
 );
-
-
 module.exports = router;

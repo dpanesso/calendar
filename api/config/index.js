@@ -2,8 +2,11 @@
 const config = {
   api: {
     port: 4000,
-    secret: 'F.R. - J ai couru jusqu a quand ce que je pouvais.',
+    secret: 'Audiard - J parle pas aux cons ca les instruit',
   },
+  jwt: {
+    passphrase: 'People don t really change, they just become better actors'
+  }
 };
 
 module.exports = config;
