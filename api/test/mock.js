@@ -9,7 +9,7 @@ const mock = {
     email: 'sydneyGovou@quel.attaquant',
     username: 'whiskyCoke',
   },
-  loggedOuttoken: 'My logged out token',
+  loggedOutToken: 'My logged out token',
 };
 
 module.exports = mock;

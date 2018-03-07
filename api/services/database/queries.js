@@ -50,5 +50,6 @@ module.exports = {
   createUser,
   getUserById,
   addTokenToBlacklist,
+  getTokenBlacklist,
   isTokenBlacklisted,
 };

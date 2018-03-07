@@ -4,7 +4,13 @@
 const { expect } = require('chai');
 const mock = require('./mock');
 const { encrypt, encryptSHA, compareHash } = require('../utils/encrypt');
-const { createUser, getUserById } = require('../services/database/queries');
+const {
+  createUser,
+  getUserById,
+  addTokenToBlacklist,
+  isTokenBlacklisted,
+  getTokenBlacklist,
+} = require('../services/database/queries');
 
 
 describe('Utils functions', () => {
@@ -45,26 +51,42 @@ describe('Database queries', () => {
   it('Get user data', () => {
     getUserById(email)
       .then((user) => {
-        console.log('|||||||||||||||||||||| GET USER BY ID |||||||||||||||||||');
         expect(user.email).to.equal(mock.dbUser.email);
         expect(user.username).to.equal(mock.dbUser.username);
       })
       .catch((err) => {
-        console.log('|||||||||||||||||||||| THROW |||||||||||||||||||');
         throw new Error(err.message);
       });
   });
 
-  // it('Add token to blacklist', () => {
-  //   addTokenToBlacklist(mock.loggedOuttoken)
-  //     .then((user) => {
-  //       console.log('|||||||||||||||||||||| GET USER BY ID |||||||||||||||||||');
-  //       expect(user.email).to.equal(mock.dbUser.email);
-  //       expect(user.username).to.equal(mock.dbUser.username);
-  //     })
-  //     .catch((err) => {
-  //       console.log('|||||||||||||||||||||| THROW |||||||||||||||||||');
-  //       throw new Error(err.message);
-  //     });
-  // });
+  it('Add token to blacklist', () => {
+    addTokenToBlacklist(mock.loggedOutToken)
+      .then((reply) => {
+        expect(typeof reply).to.equal('number');
+      })
+      .catch((err) => {
+        throw new Error(err.message);
+      });
+  });
+
+  it('Get token blacklist', () => {
+    getTokenBlacklist()
+      .then((blacklist) => {
+        expect(typeof blacklist).to.equal('object');
+      })
+      .catch((err) => {
+        throw new Error(err.message);
+      });
+  });
+
+  it('Check if token in blacklist', () => {
+    isTokenBlacklisted(mock.loggedOutToken)
+      .then((isBlacklisted) => {
+        // console.log(isBlacklisted);
+        expect(isBlacklisted).to.equal(true);
+      })
+      .catch((err) => {
+        throw new Error(err.message);
+      });
+  });
 });
