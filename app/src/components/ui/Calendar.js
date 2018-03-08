@@ -34,11 +34,15 @@ const Calendar = (props: Props) => {
     userBuffer,
     onRemove,
     toggleDapp,
+    onCloseDapp,
   } = props;
+
   return (
     <div>
       <h1>My calendar</h1>
-      <BigCalendar
+      {(toggleDapp.dappState === true) ? <Dapp onClose={onCloseDapp}/> :
+      (<div>
+        <BigCalendar
         selectable
         events={events}
         defaultView="week"
@@ -47,7 +51,6 @@ const Calendar = (props: Props) => {
         onSelectEvent={handleOpen}
         onSelectSlot={handleOpen}
       />
-      {(toggleDapp)?<Dapp/>:<div></div>}
       <Dialog
         modal={false}
         open={open}
@@ -64,6 +67,9 @@ const Calendar = (props: Props) => {
           onRemove={onRemove}
         />
       </Dialog>
+      </div>)
+      }
+
     </div>
   );
 };

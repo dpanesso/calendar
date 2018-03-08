@@ -43,8 +43,11 @@ const mapDispatchToProps = dispatch => (
     },
     updateEvents(events) {
       dispatch(updateUserEvents(events));
-      dispatch(toggleDapp(true))
+      dispatch(toggleDapp(true));
     },
+    onCloseDapp() {
+      dispatch(toggleDapp(false));
+    }
   }
 );
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-
+import toggleDapp from '../../store/actions';
 import availableWallets from '../../dapp/wallets';
 import DappController from './DappController'
 const styles = {
@@ -29,6 +29,7 @@ export default class Dapp extends Component {
 
   handleClose = () => {
     this.setState({open: false});
+    this.props.onClose()
   };
 
   onAccountChange = e => {

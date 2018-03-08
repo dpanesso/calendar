@@ -37,6 +37,7 @@ const AppUI = (props: Props) => {
     userOpenNew,
     userOpenUpdate,
     toggleDapp,
+    onCloseDapp,
     userBuffer,
     userEvents,
     openModal,
@@ -158,7 +159,9 @@ const AppUI = (props: Props) => {
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
   };
-
+const onCloseDappEvent = () => {
+  onCloseDapp()
+}
   return (
     <BrowserRouter>
       <div className="App">
@@ -184,6 +187,7 @@ const AppUI = (props: Props) => {
             onSubmit={onSubmit}
             onRemove={onRemove}
             toggleDapp={toggleDapp}
+            onCloseDapp={onCloseDappEvent}
           />
           <PrivateRoute
             path="/rooms"

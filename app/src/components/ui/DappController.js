@@ -30,7 +30,7 @@ export default class DappController extends Component {
     // initialize the contract and retrieve the deployed version
     const { web3 } = this.props;
     const simpleStorage = await SimpleStorageContract.createWithWeb3(web3);
-
+    console.log(simpleStorage);
     const storageValue = await simpleStorage.get();
     this.setState({
       simpleStorage,
@@ -92,6 +92,7 @@ export default class DappController extends Component {
         account,
         gasPriceGWEI
       );
+      console.log("===onSetButton after await");
       // NB at this stage we don't have the transaction confirmed yet,
       // but we move on by optimistically setting the new value
       this.setState({
