@@ -6,6 +6,7 @@ import ModalEvent from './ModalEvent';
 type Props = {
   userOpenNew: boolean,
   userBuffer: Object,
+  calendarLoading: boolean,
   onUpdateFieldEvent: Function,
   handleClose: Function,
   onSubmit: Function,
@@ -20,6 +21,7 @@ const Modal = (props: Props) => {
     handleClose,
     onSubmit,
     onRemove,
+    calendarLoading,
   } = props;
   const type = userOpenNew ? 'new meeting' : 'update meeting';
   return (
@@ -30,6 +32,7 @@ const Modal = (props: Props) => {
       onSubmit={onSubmit}
       onRemove={onRemove}
       type={type}
+      calendarLoading={calendarLoading}
     />
   );
 };

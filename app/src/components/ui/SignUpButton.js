@@ -13,7 +13,7 @@ type Props = {
 const SignUpButton = (props: Props) => {
   const { suLoading, signUpUser, styles } = props;
   return suLoading === true ?
-    <div className="signInUpLoader">
+    <div className="signLoader">
       <MaterialLoader size={10} />
     </div> :
     <RaisedButton

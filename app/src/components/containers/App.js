@@ -7,6 +7,7 @@ import {
   updateUserEvents,
   updateUserData,
   logOutUser,
+  submitUserCalendar,
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
@@ -19,6 +20,7 @@ const mapStateToProps = state => (
     userEvents: state.userEvents,
     user: state.user,
     loggedIn: state.loggedIn,
+    calendarLoading: state.calendarLoading,
   }
 );
 
@@ -41,6 +43,9 @@ const mapDispatchToProps = dispatch => (
     },
     updateEvents(events) {
       dispatch(updateUserEvents(events));
+    },
+    submitCalendar() {
+      dispatch(submitUserCalendar());
     },
   }
 );

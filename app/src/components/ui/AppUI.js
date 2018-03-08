@@ -21,12 +21,14 @@ type Props = {
   userOpenUpdate: boolean,
   userBuffer: Object,
   userEvents: Array<Object>,
+  calendarLoading: boolean,
   openModal: Function,
   closeModal: Function,
   updateField: Function,
   updateEvents: Function,
   updateUser: Function,
   logOut: Function,
+  submitCalendar: Function,
 };
 
 const AppUI = (props: Props) => {
@@ -41,8 +43,10 @@ const AppUI = (props: Props) => {
     closeModal,
     updateField,
     updateEvents,
+    submitCalendar,
     updateUser,
     logOut,
+    calendarLoading,
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -55,17 +59,22 @@ const AppUI = (props: Props) => {
   };
   const onNewEvent = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'new')
-      .then(newEvents => updateEvents(newEvents));
-    handleClose();
+      .then((newEvents) => {
+        updateEvents(newEvents);
+        handleClose();
+      });
   };
 
   const onUpdateEvent = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'update')
-      .then(newEvents => updateEvents(newEvents));
-    handleClose();
+      .then((newEvents) => {
+        updateEvents(newEvents);
+        handleClose();
+      });
   };
 
   const onSubmit = (key: string) => {
+    submitCalendar();
     switch (key) {
       case 'update meeting':
         onUpdateEvent();
@@ -152,6 +161,7 @@ const AppUI = (props: Props) => {
             handleClose={handleClose}
             onSubmit={onSubmit}
             onRemove={onRemove}
+            calendarLoading={calendarLoading}
           />
           <PrivateRoute
             path="/rooms"

@@ -192,6 +192,17 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
   }
 };
 
+export const calendarLoading = (state: boolean = false, action: Object) => {
+  switch (action.type) {
+    case C.UPDATE_MEETINGS:
+      return false;
+    case C.SUBMIT_CALENDAR:
+      return true;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   user,
   loggedIn,
@@ -204,6 +215,7 @@ export default combineReducers({
   signupErrors,
   signup,
   isLoginModalOpen,
+  calendarLoading,
   userOpenNew,
   userOpenUpdate,
   userBuffer,

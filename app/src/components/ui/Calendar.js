@@ -20,6 +20,7 @@ type Props = {
   open: boolean,
   userOpenNew: boolean,
   userBuffer: Object,
+  calendarLoading: boolean,
 }
 
 
@@ -34,6 +35,7 @@ const Calendar = (props: Props) => {
     userOpenNew,
     userBuffer,
     onRemove,
+    calendarLoading,
   } = props;
   return (
     <div>
@@ -61,6 +63,7 @@ const Calendar = (props: Props) => {
           handleClose={handleClose}
           onSubmit={onSubmit}
           onRemove={onRemove}
+          calendarLoading={calendarLoading}
         />
       </Dialog>
     </div>

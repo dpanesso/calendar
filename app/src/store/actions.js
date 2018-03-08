@@ -88,6 +88,11 @@ export const openUserModal = (kind: boolean, event: Object) => (
     },
   });
 
+export const submitUserCalendar = () => (
+  {
+    type: C.SUBMIT_CALENDAR,
+  });
+
 export const closeUserModal = () => (
   {
     type: C.CLOSE_USER_MODAL,

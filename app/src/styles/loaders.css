@@ -1,4 +1,13 @@
-.signInUpLoader {
+.signLoader {
+  position: relative;
+  top: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendarLoader {
   position: relative;
   top: 20px;
   height: 100%;

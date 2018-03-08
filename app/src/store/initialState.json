@@ -21,5 +21,6 @@
   "userOpenNew": false,
   "userOpenUpdate": false,
   "userBuffer": {},
+  "calendarLoading": false,
   "userEvents": []
 }

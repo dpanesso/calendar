@@ -3,15 +3,16 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
-import RaisedButton from 'material-ui/RaisedButton';
+import CalendarButton from './CalendarButton';
 
 type Props = {
   userBuffer: Object,
+  calendarLoading: boolean,
+  type: string,
   onUpdateFieldEvent: Function,
   onSubmit: Function,
   onRemove: Function,
   handleClose: Function,
-  type: string,
 };
 
 const ModalEvent = (props: Props) => {
@@ -22,15 +23,13 @@ const ModalEvent = (props: Props) => {
     handleClose,
     onRemove,
     type,
+    calendarLoading,
   } = props;
   const {
     title,
     start,
     end,
   } = userBuffer;
-  const displayRemove = type === 'update meeting' ?
-    { display: 'inline-block' } :
-    { display: 'none' };
 
   return (
     <div>
@@ -73,22 +72,12 @@ const ModalEvent = (props: Props) => {
         defaultTime={new Date(end)}
         onChange={(evt, value) => onUpdateFieldEvent('end time', value)}
       />
-      <RaisedButton
-        label="Remove"
-        primary={true}
-        onClick={onRemove}
-        style={displayRemove}
-      />
-      <RaisedButton
-        label="Cancel"
-        primary={true}
-        style={{ margin: '10px 10px', textAlign: 'center' }}
-        onClick={handleClose}
-      />
-      <RaisedButton
-        label="Submit"
-        primary={true}
-        onClick={() => onSubmit(type)}
+      <CalendarButton
+        type={type}
+        calendarLoading={calendarLoading}
+        onSubmit={onSubmit}
+        handleClose={handleClose}
+        onRemove={onRemove}
       />
     </div>
   );
