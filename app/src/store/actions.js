@@ -101,31 +101,10 @@ export const updateUserField = (field: string, value: string) => (
       value,
     },
   });
-<<<<<<< HEAD
-=======
-
-export const submitUserEvent = (event: Object) => (
-  {
-    type: C.SUBMIT_MEETING,
-    payload: event,
-  });
-
-<<<<<<< HEAD
-  export const toggleDapp = () => (
+  export const toggleDapp = (toggle) => (
     {
       type: C.TOGGLE_DAPP,
+      payload: {
+        toggleDapp: toggle,
+      }
     });
->>>>>>> add state to open a dapp at submit new meeting event
-=======
-export const onToggleDapp = (toggle: boolean) => (
-  {
-    type: C.TOGGLE_DAPP,
-    payload: toggle,
-  });
-//onboardingDone
-export const onboardingDone = (event: Object) => (
-  {
-    type: C.ONBOARDING_DONE,
-    payload: event,
-  });
->>>>>>> add onboarding for dapp

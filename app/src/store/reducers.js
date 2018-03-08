@@ -202,10 +202,15 @@ export const toggleDapp = (state: Array<Object> = [], action: Object) => {
 };
 
 export const onboardingDone = (state: Array<Object> = [], action: Object) => {
-  return {
-    ...state,
-    onboardingDone: true,
-  };
+  switch (action.type) {
+    case C.ON_BOARDING_DONE:
+      return {
+        ...state,
+        onboardingDone: true,
+      };
+    default:
+      return state;
+  }
 }
 
 export default combineReducers({

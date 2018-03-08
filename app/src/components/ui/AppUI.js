@@ -13,14 +13,9 @@ import { prefixURL, customPost } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
 import sanitizeArray from '../../utils/array';
 import '../../styles/calendar.css';
-<<<<<<< HEAD
 
-=======
 import OnboardingComponent from './OnboardingComponent'
-// Setup the localizer by providing the moment (or globalize) Object
-// to the correct localizer.
-BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
->>>>>>> add onboarding for dapp
+
 
 type Props = {
   user: Object,
@@ -35,11 +30,8 @@ type Props = {
   updateField: Function,
   updateEvents: Function,
   updateUser: Function,
-<<<<<<< HEAD
   logOut: Function,
-=======
   onOnboardingDone: Function,
->>>>>>> add onboarding for dapp
 };
 
 const AppUI = (props: Props) => {
@@ -56,12 +48,8 @@ const AppUI = (props: Props) => {
     updateField,
     updateEvents,
     updateUser,
-<<<<<<< HEAD
     logOut,
-=======
-    toggleDappEvent,
     onOnboardingDone,
->>>>>>> add onboarding for dapp
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -84,12 +72,8 @@ const AppUI = (props: Props) => {
     updateEvents([
       ...userEvents,
       newMeeting,
-<<<<<<< HEAD
     ], user);
-=======
-    ]);
-    toggleDappEvent(true);
->>>>>>> add onboarding for dapp
+
     handleClose();
   };
 
@@ -180,6 +164,7 @@ const AppUI = (props: Props) => {
   };
 console.log("+++++++");
 console.log(toggleDapp);
+//<OnboardingComponent isVisible={toggleDapp} onOnboardingDone={onOnboardingDone}/>
   return (
     <BrowserRouter>
       <div className="App">
@@ -189,7 +174,6 @@ console.log(toggleDapp);
           loggedIn={loggedIn}
           onLogOut={onLogOut}
         />
-<<<<<<< HEAD
         <Switch>
           <Route exact path="/" render={() => <Home loggedIn={loggedIn} />} />
           <PrivateRoute
@@ -205,6 +189,7 @@ console.log(toggleDapp);
             handleClose={handleClose}
             onSubmit={onSubmit}
             onRemove={onRemove}
+            toggleDapp={toggleDapp}
           />
           <PrivateRoute
             path="/rooms"
@@ -215,11 +200,6 @@ console.log(toggleDapp);
         </Switch>
       </div>
     </BrowserRouter>
-=======
-      </Dialog>
-      <OnboardingComponent isVisible={toggleDapp} onOnboardingDone={onOnboardingDone}/>
-    </div>
->>>>>>> add onboarding for dapp
   );
 };
 
