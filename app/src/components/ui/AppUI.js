@@ -9,7 +9,7 @@ import Modal from './Modal';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import parseDates from '../../utils/parseDates';
 import '../../styles/calendar.css';
-
+import OnboardingComponent from './OnboardingComponent'
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
 BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
@@ -18,6 +18,7 @@ type Props = {
   user: Object,
   userOpenNew: boolean,
   userOpenUpdate: boolean,
+  toggleDapp: boolean,
   userBuffer: Object,
   userEvents: Array<Object>,
   openModal: Function,
@@ -25,6 +26,7 @@ type Props = {
   updateField: Function,
   submitEvent: Function,
   updateUser: Function,
+  onOnboardingDone: Function,
 };
 
 const AppUI = (props: Props) => {
@@ -32,6 +34,7 @@ const AppUI = (props: Props) => {
     user,
     userOpenNew,
     userOpenUpdate,
+    toggleDapp,
     userBuffer,
     userEvents,
     openModal,
@@ -39,6 +42,8 @@ const AppUI = (props: Props) => {
     updateField,
     submitEvent,
     updateUser,
+    toggleDappEvent,
+    onOnboardingDone,
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -62,6 +67,7 @@ const AppUI = (props: Props) => {
       ...userEvents,
       newMeeting,
     ]);
+    toggleDappEvent(true);
     handleClose();
   };
 
@@ -111,7 +117,8 @@ const AppUI = (props: Props) => {
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
   };
-
+console.log("+++++++");
+console.log(toggleDapp);
   return (
     <div className="App">
       <Navbar user={user} updateUser={updateUser} />
@@ -139,6 +146,7 @@ const AppUI = (props: Props) => {
           onSubmit={onSubmit}
         />
       </Dialog>
+      <OnboardingComponent isVisible={toggleDapp} onOnboardingDone={onOnboardingDone}/>
     </div>
   );
 };

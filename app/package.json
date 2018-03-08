@@ -5,7 +5,7 @@
   "author": "JeanKnapik",
   "scripts": {
     "start-server": "nodemon ./index.js --exec babel-node -e js",
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "start-docker": "yarn build && yarn start-server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

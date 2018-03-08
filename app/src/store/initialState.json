@@ -1,6 +1,7 @@
 {
   "user": {},
   "toggleDapp": false,
+  "onboardingDone": false,
   "isLoginModalOpen": false,
   "tabvalue": "a",
   "loginLoader": false,

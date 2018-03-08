@@ -96,7 +96,14 @@ export const submitUserEvent = (event: Object) => (
     payload: event,
   });
 
-  export const toggleDapp = () => (
-    {
-      type: C.TOGGLE_DAPP,
-    });
+export const onToggleDapp = (toggle: boolean) => (
+  {
+    type: C.TOGGLE_DAPP,
+    payload: toggle,
+  });
+//onboardingDone
+export const onboardingDone = (event: Object) => (
+  {
+    type: C.ONBOARDING_DONE,
+    payload: event,
+  });

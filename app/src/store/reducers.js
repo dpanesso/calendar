@@ -159,7 +159,6 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
   switch (action.type) {
     case C.SUBMIT_MEETING:
       return action.payload;
-
     default:
       return state;
   }
@@ -168,15 +167,19 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
 export const toggleDapp = (state: Array<Object> = [], action: Object) => {
   switch (action.type) {
     case C.TOGGLE_DAPP:
-      return {
-        ...state,
-        toggleDapp: !state.toggleDapp,
-      };
-
+      return action.payload;
     default:
       return state;
   }
+};
+
+export const onboardingDone = (state: Array<Object> = [], action: Object) => {
+  return {
+    ...state,
+    onboardingDone: true,
+  };
 }
+
 export default combineReducers({
   user,
   tabvalue,
@@ -192,4 +195,5 @@ export default combineReducers({
   userBuffer,
   userEvents,
   toggleDapp,
+  onboardingDone
 });

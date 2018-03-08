@@ -7,6 +7,7 @@
     "postinstall": "cd app && yarn && cd ../api && yarn && cd ../",
     "start-api": "cd api && yarn start",
     "start-app": "cd app && yarn start",
+    "start-app": "cd app && yarn start",
     "start-docker": "docker-compose up -d && docker-compose logs -f -t"
   },
   "license": "GPL-3.0",
@@ -21,6 +22,10 @@
     "eslint-plugin-jest": "^21.13.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "flow-bin": "^0.66.0"
+    "flow-bin": "^0.66.0",
+    "truffle-contract": "^3.0.3",
+    "@ledgerhq/web3-subprovider": "^4.1.0",
+    "@ledgerhq/hw-transport-u2f": "^4.0.0",
+    "web3": "^1.0.0-beta.29"
   }
 }
