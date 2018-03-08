@@ -1,19 +1,15 @@
 // @flow
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import BigCalendar from 'react-big-calendar';
-import moment from 'moment';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from '../containers/Navbar';
-import Modal from './Modal';
+import Home from '../ui/Home';
+import Calendar from '../ui/Calendar';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import { prefixURL, customPost } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
 import '../../styles/calendar.css';
 
-// Setup the localizer by providing the moment (or globalize) Object
-// to the correct localizer.
-BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 type Props = {
   user: Object,
@@ -133,38 +129,32 @@ const AppUI = (props: Props) => {
   };
 
   return (
-    <div className="App">
-      <Navbar
-        user={user}
-        updateUser={updateUser}
-        loggedIn={loggedIn}
-        onLogOut={onLogOut}
-      />
-      <BigCalendar
-        selectable
-        events={parseDates(userEvents)}
-        defaultView="week"
-        scrollToTime={new Date(1970, 1, 1, 6)}
-        defaultDate={new Date(2015, 3, 12)}
-        onSelectEvent={handleOpen}
-        onSelectSlot={handleOpen}
-      />
-      <Dialog
-        modal={false}
-        open={userOpenNew || userOpenUpdate}
-        onRequestClose={handleClose}
-        autoScrollBodyContent={true}
-        contentStyle={{ width: '350px' }}
-      >
-        <Modal
-          userOpenNew={userOpenNew}
-          userBuffer={userBuffer}
-          onUpdateFieldEvent={onUpdateFieldEvent}
-          handleClose={handleClose}
-          onSubmit={onSubmit}
+    <BrowserRouter>
+      <div className="App">
+        <Navbar
+          user={user}
+          updateUser={updateUser}
+          loggedIn={loggedIn}
+          onLogOut={onLogOut}
         />
-      </Dialog>
-    </div>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/user" render={() => (
+            <Calendar
+              events={parseDates(userEvents)}
+              handleOpen={handleOpen}
+              open={userOpenNew || userOpenUpdate}
+              userOpenNew={userOpenNew}
+              userBuffer={userBuffer}
+              onUpdateFieldEvent={onUpdateFieldEvent}
+              handleClose={handleClose}
+              onSubmit={onSubmit}
+            />)}
+          />
+
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 };
 
