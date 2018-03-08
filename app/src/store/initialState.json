@@ -16,6 +16,7 @@
     "password": "",
     "confirmPassword": ""
   },
+  "successMessage": "",
   "userOpenNew": false,
   "userOpenUpdate": false,
   "userBuffer": {},

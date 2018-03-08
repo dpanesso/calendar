@@ -24,6 +24,7 @@ type Props = {
     password: string,
     confirmPassword: string,
   },
+  successMessage: string,
   closeModal: Function,
   changeTab: Function,
   updateLoginField: Function,
@@ -106,9 +107,12 @@ class AuthModalUI extends Component<Props> {
     customPost(url, formData, '')
       .then((response) => {
         const errors = response.errors ? response.errors : {};
-        if (errors.summary) this.props.failSignup(errors);
-        this.props.successSignup();
-        this.props.changeTab();
+        if (errors.summary) {
+          this.props.failSignup(errors)
+        } else {
+          this.props.successSignup(response.success);
+          this.props.changeTab();
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -137,6 +141,7 @@ class AuthModalUI extends Component<Props> {
       loginErrors,
       signupLoader,
       signupErrors,
+      successMessage,
     } = this.props;
     return (
       <Tabs tabvalue={tabvalue} onChange={this.onTabChange}>
@@ -154,6 +159,7 @@ class AuthModalUI extends Component<Props> {
             onSubmit={this.onSubmitSignUp}
             signupLoader={signupLoader}
             signupErrors={signupErrors}
+            successMessage={successMessage}
           />
         </Tab>
       </Tabs>

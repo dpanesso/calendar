@@ -9,6 +9,7 @@ type Props = {
   onSubmit: Function,
   signupLoader: boolean,
   signupErrors: Object,
+  successMessage: string,
 }
 
 const SignUpForm = (props: Props) => {
@@ -17,10 +18,12 @@ const SignUpForm = (props: Props) => {
     onSubmit,
     signupLoader,
     signupErrors,
+    successMessage,
   } = props;
   return (
     <div>
       {signupErrors.summary && <p className="error-message">☢ {signupErrors.summary}</p>}
+      {successMessage && <p className="success-message">:-) {successMessage}</p>}
       <TextField
         name="username"
         hintText="username"

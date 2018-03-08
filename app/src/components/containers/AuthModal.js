@@ -23,6 +23,7 @@ const mapStateToProps = state => (
     signupLoader: state.signupLoader,
     signupErrors: state.signupErrors,
     signup: state.signup,
+    successMessage: state.successMessage,
   }
 );
 
@@ -49,8 +50,8 @@ const mapDispatchToProps = dispatch => (
     submitSignup() {
       dispatch(submitUserSignup());
     },
-    successSignup() {
-      dispatch(successUserSignup());
+    successSignup(message) {
+      dispatch(successUserSignup(message));
     },
     failSignup(errors) {
       dispatch(failUserSignup(errors));

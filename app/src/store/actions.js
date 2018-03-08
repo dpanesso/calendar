@@ -56,9 +56,10 @@ export const submitUserSignup = () => (
     type: C.SUBMIT_SIGNUP,
   });
 
-export const successUserSignup = () => (
+export const successUserSignup = (message: string) => (
   {
     type: C.SUCCESS_SIGNUP,
+    payload: message,
   });
 
 export const failUserSignup = (errors: Object) => (

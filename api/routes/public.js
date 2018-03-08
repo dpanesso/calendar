@@ -16,7 +16,7 @@ router.post('/signup', (req, res) => {
           errors: result.errors,
         });
       }
-      return res.status(200).send({ success: 'Account successfully created' }).end();
+      return res.status(200).send({ success: 'Account successfully created. Please log in' }).end();
     })
     .catch((err) => {
       throw new Error(err.message);

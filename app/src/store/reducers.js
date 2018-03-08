@@ -27,8 +27,6 @@ export const tabvalue = (state: string = 'a', action: Object) => {
   switch (action.type) {
     case C.TAB_CHANGE:
       return state === 'a' ? 'b' : 'a';
-    case C.SUCCESS_SIGNUP:
-      return 'a';
     default:
       return state;
   }
@@ -70,6 +68,8 @@ export const loginErrors = (state: Object = {}, action: Object) => {
       return action.payload;
     case C.CLOSE_LOGIN_MODAL:
       return {};
+    case C.SUCCESS_LOGIN:
+      return {};
     default:
       return state;
   }
@@ -81,6 +81,19 @@ export const signupErrors = (state: Object = {}, action: Object) => {
       return action.payload;
     case C.CLOSE_LOGIN_MODAL:
       return {};
+    case C.SUCCESS_SIGNUP:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const successMessage = (state: string = '', action: Object) => {
+  switch (action.type) {
+    case C.CLOSE_LOGIN_MODAL:
+      return '';
+    case C.SUCCESS_SIGNUP:
+      return action.payload;
     default:
       return state;
   }
@@ -102,6 +115,8 @@ export const signup = (state: Object = {}, action: Object) => {
     case C.UPDATE_SIGNUP_FIELD:
       return action.payload;
     case C.CLOSE_LOGIN_MODAL:
+      return emptySignup;
+    case C.SUCCESS_SIGNUP:
       return emptySignup;
     default:
       return state;
@@ -170,6 +185,7 @@ export default combineReducers({
   tabvalue,
   loginLoader,
   loginErrors,
+  successMessage,
   login,
   signupLoader,
   signupErrors,
