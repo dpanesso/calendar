@@ -28,7 +28,12 @@ export default class Dapp extends Component {
   };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({
+      open: false,
+      web3: null,
+      account: null
+    });
+
     this.props.onClose()
   };
 
@@ -121,7 +126,7 @@ export default class Dapp extends Component {
       actions = [
         ...actions,
         <RaisedButton
-          label="Submit"
+          label="Next"
           primary={true}
           keyboardFocused={true}
           onClick={this.onOnboardingDone}

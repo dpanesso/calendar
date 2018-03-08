@@ -46,9 +46,9 @@ export default class DappController extends Component {
     );
   };
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     try {
-      this.valueChangedSubscription();
+      await this.valueChangedSubscription();
     } catch (e) {
       // NB MetaMask currently have an error thrown
       console.error(e);
