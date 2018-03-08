@@ -14,9 +14,6 @@ import parseDates from '../../utils/parseDates';
 import sanitizeArray from '../../utils/array';
 import '../../styles/calendar.css';
 
-import OnboardingComponent from './OnboardingComponent'
-
-
 type Props = {
   user: Object,
   loggedIn: boolean,
@@ -31,7 +28,6 @@ type Props = {
   updateEvents: Function,
   updateUser: Function,
   logOut: Function,
-  onOnboardingDone: Function,
 };
 
 const AppUI = (props: Props) => {
@@ -162,9 +158,7 @@ const AppUI = (props: Props) => {
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
   };
-console.log("+++++++");
-console.log(toggleDapp);
-//<OnboardingComponent isVisible={toggleDapp} onOnboardingDone={onOnboardingDone}/>
+
   return (
     <BrowserRouter>
       <div className="App">

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SimpleStorageContract from "../../dapp/SimpleStoreContract";
@@ -15,7 +13,6 @@ export default class DappController extends Component {
   static propTypes = {
     web3: PropTypes.object.isRequired,
     account: PropTypes.string.isRequired,
-    onLogout: PropTypes.func.isRequired
   };
   state = {
     storageValue: 1,
@@ -114,7 +111,6 @@ export default class DappController extends Component {
       simpleStorage,
       storageValue,
       localInputValue,
-      gasPriceGWEI,
       error,
       pending,
       tx,

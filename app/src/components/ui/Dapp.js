@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
@@ -19,7 +18,6 @@ export default class Dapp extends Component {
   state = {
     open: true,
     pending: false,
-    web3: null,
     error: null,
     accounts: null,
     selectedWalletIndex: -1,
@@ -29,35 +27,19 @@ export default class Dapp extends Component {
     account: null
   };
 
-  // handleOpen = () => {
-  //   this.setState({open: true});
-  // };
-
   handleClose = () => {
-    console.log("====handleClose");
     this.setState({open: false});
   };
 
   onAccountChange = e => {
-    // const selectedAccountIndex = parseInt(e.target.value, 10);
-    // const account = this.state.accounts[selectedAccountIndex];
-    // this.setState({account});
     this.setState({ selectedAccountIndex: parseInt(e.target.value, 10) });
   };
 
   onOnboardingDone = (e) => {
-    console.log("====onOnboardingDone");
     const { web3, accounts, selectedAccountIndex } = this.state;
     const account = accounts && accounts[selectedAccountIndex];
-    console.log(web3);
-    console.log(accounts);
     this.setState({ account })
-    //account && this.onOnboardingDone(web3, account);
   }
-
-  onLogout = () => {
-    this.setState({ web3: null, account: null });
-  };
 
   onChange = e => {
     const { accounts } = this.state
@@ -70,7 +52,6 @@ export default class Dapp extends Component {
 
 
   onWalletChange = async e => {
-    console.log("======onWalletChange");
     const selectedWalletIndex = parseInt(e.target.value, 10);
     const wallet = availableWallets[selectedWalletIndex];
 
@@ -89,8 +70,6 @@ export default class Dapp extends Component {
         });
       });
       if (accounts.length === 0) throw new Error("no accounts found");
-      console.log("=====Accounts found");
-      console.log(accounts);
       this.setState({
         web3,
         accounts,
@@ -107,17 +86,15 @@ export default class Dapp extends Component {
 
     const {
       pending,
-      error,
       accounts,
       selectedAccountIndex,
       selectedWalletIndex,
       web3,
-      account,
-      accountSelected
+      account
     } = this.state;
 
     let actions = [
-      <FlatButton
+      <RaisedButton
         label="Cancel"
         primary={true}
         onClick={this.handleClose}
@@ -142,7 +119,7 @@ export default class Dapp extends Component {
       title = "Select an account"
       actions = [
         ...actions,
-        <FlatButton
+        <RaisedButton
           label="Submit"
           primary={true}
           keyboardFocused={true}
@@ -171,7 +148,7 @@ export default class Dapp extends Component {
               onRequestClose={this.handleClose}
               autoScrollBodyContent={true}
             >
-            {account && web3 ? (<DappController account={account} web3={web3} onLogout={this.onLogout} />):
+            {account && web3 ? (<DappController account={account} web3={web3} />):
               (<RadioButtonGroup name="shipSpeed" defaultSelected="not_light" onChange={this.onChange}>
                 {radios}
               </RadioButtonGroup>)
