@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import availableWallets from '../../dapp/wallets';
-import DAppController from './DAppController'
+import DappController from './DappController'
 const styles = {
   radioButton: {
     marginTop: 16,
@@ -24,6 +24,7 @@ export default class Dapp extends Component {
     accounts: null,
     selectedWalletIndex: -1,
     selectedAccountIndex: 0,
+    accountSelected: false,
     web3: null,
     account: null
   };
@@ -38,6 +39,9 @@ export default class Dapp extends Component {
   };
 
   onAccountChange = e => {
+    // const selectedAccountIndex = parseInt(e.target.value, 10);
+    // const account = this.state.accounts[selectedAccountIndex];
+    // this.setState({account});
     this.setState({ selectedAccountIndex: parseInt(e.target.value, 10) });
   };
 
@@ -51,11 +55,25 @@ export default class Dapp extends Component {
     //account && this.onOnboardingDone(web3, account);
   }
 
+  onLogout = () => {
+    this.setState({ web3: null, account: null });
+  };
+
+  onChange = e => {
+    const { accounts } = this.state
+    if(accounts === null){
+      this.onWalletChange(e)
+    } else {
+      this.onAccountChange(e)
+    }
+  }
+
+
   onWalletChange = async e => {
     console.log("======onWalletChange");
     const selectedWalletIndex = parseInt(e.target.value, 10);
     const wallet = availableWallets[selectedWalletIndex];
-    this.handleClose()
+
     try {
       this.setState({
         selectedWalletIndex,
@@ -72,6 +90,7 @@ export default class Dapp extends Component {
       });
       if (accounts.length === 0) throw new Error("no accounts found");
       console.log("=====Accounts found");
+      console.log(accounts);
       this.setState({
         web3,
         accounts,
@@ -93,54 +112,71 @@ export default class Dapp extends Component {
       selectedAccountIndex,
       selectedWalletIndex,
       web3,
-      account
+      account,
+      accountSelected
     } = this.state;
 
-    const actions = [
+    let actions = [
       <FlatButton
         label="Cancel"
         primary={true}
         onClick={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.onOnboardingDone}
-      />,
-    ];
+      />];
 
+    let title = "Select a wallet"
     const radios = [];
-    console.log(availableWallets);
-    availableWallets.map((wallet, i) => (
-      radios.push(
-        <RadioButton
-          key={i}
-          value={i}
-          checked={selectedWalletIndex === i}
-          label={wallet.name}
-          style={styles.radioButton}
-          disabled={pending}
-        />
-      )))
+
+    if(account == null && accounts === null){
+      availableWallets.map((wallet, i) => (
+        radios.push(
+          <RadioButton
+            key={i}
+            value={i}
+            checked={selectedWalletIndex === i}
+            label={wallet.name}
+            style={styles.radioButton}
+            disabled={pending}
+          />
+        )))
+    } else if(account == null) {
+      title = "Select an account"
+      actions = [
+        ...actions,
+        <FlatButton
+          label="Submit"
+          primary={true}
+          keyboardFocused={true}
+          onClick={this.onOnboardingDone}
+          />]
+
+      accounts.map((account, i) => (
+        radios.push(
+          <RadioButton
+            key={i}
+            value={i}
+            checked={selectedAccountIndex === i}
+            label={account}
+            style={styles.radioButton}
+          />
+        )))
+    }
 
     return (
       <div>
-        {account && web3 ? (<DAppController account={account} web3={web3} onLogout={this.onLogout} />):
-        (<Dialog
-              title="Select a wallet"
+        <Dialog
+              title={title}
               actions={actions}
               modal={false}
               open={this.state.open}
               onRequestClose={this.handleClose}
               autoScrollBodyContent={true}
             >
-              <RadioButtonGroup name="shipSpeed" defaultSelected="not_light" onChange={this.onWalletChange}>
+            {account && web3 ? (<DappController account={account} web3={web3} onLogout={this.onLogout} />):
+              (<RadioButtonGroup name="shipSpeed" defaultSelected="not_light" onChange={this.onChange}>
                 {radios}
-              </RadioButtonGroup>
-            </Dialog>
-          )
-        }
+              </RadioButtonGroup>)
+            }
+        </Dialog>
       </div>
     );
   }

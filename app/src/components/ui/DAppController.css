@@ -1,12 +1,12 @@
-.DAppController {
+.DappController {
   font-size: 1.6em;
 }
-.DAppController .error {
+.DappController .error {
   margin: 20px 0;
   color: #f66;
 }
-.DAppController input,
-.DAppController button {
+.DappController input,
+.DappController button {
   font-size: inherit;
   margin: 0 1em;
 }

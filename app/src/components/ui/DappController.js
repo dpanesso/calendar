@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import SimpleStorageContract from "./SimpleStoreContract";
-import "./DAppComponent.css";
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import SimpleStorageContract from "../../dapp/SimpleStoreContract";
+import "./DappController.css";
 
 /**
  * define our actual DApp that works with a web3 instance on a given account.
  */
-export default class DAppController extends Component {
+export default class DappController extends Component {
   static propTypes = {
     web3: PropTypes.object.isRequired,
     account: PropTypes.string.isRequired,
@@ -107,7 +110,11 @@ export default class DAppController extends Component {
       <div className="DApp">
         <p>
           Account <code>{account}</code>{" "}
-          <button onClick={onLogout}>Logout</button>
+          <RaisedButton
+            label="Log out"
+            primary={true}
+            onClick={onLogout}
+            />
         </p>
         <p>
           <label>
@@ -122,12 +129,13 @@ export default class DAppController extends Component {
             {pending ? (
               "..."
             ) : (
-              <button
+
+              <RaisedButton
+                label="Set"
+                primary={true}
                 onClick={this.onSetButton}
                 disabled={localInputValue === storageValue}
-              >
-                SET
-              </button>
+                />
             )}
           </label>
         </p>
