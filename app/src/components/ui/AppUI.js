@@ -13,13 +13,21 @@ import { prefixURL, customPost } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
 import sanitizeArray from '../../utils/array';
 import '../../styles/calendar.css';
+<<<<<<< HEAD
 
+=======
+import OnboardingComponent from './OnboardingComponent'
+// Setup the localizer by providing the moment (or globalize) Object
+// to the correct localizer.
+BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
+>>>>>>> add onboarding for dapp
 
 type Props = {
   user: Object,
   loggedIn: boolean,
   userOpenNew: boolean,
   userOpenUpdate: boolean,
+  toggleDapp: boolean,
   userBuffer: Object,
   userEvents: Array<Object>,
   openModal: Function,
@@ -27,7 +35,11 @@ type Props = {
   updateField: Function,
   updateEvents: Function,
   updateUser: Function,
+<<<<<<< HEAD
   logOut: Function,
+=======
+  onOnboardingDone: Function,
+>>>>>>> add onboarding for dapp
 };
 
 const AppUI = (props: Props) => {
@@ -36,6 +48,7 @@ const AppUI = (props: Props) => {
     loggedIn,
     userOpenNew,
     userOpenUpdate,
+    toggleDapp,
     userBuffer,
     userEvents,
     openModal,
@@ -43,7 +56,12 @@ const AppUI = (props: Props) => {
     updateField,
     updateEvents,
     updateUser,
+<<<<<<< HEAD
     logOut,
+=======
+    toggleDappEvent,
+    onOnboardingDone,
+>>>>>>> add onboarding for dapp
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -66,7 +84,12 @@ const AppUI = (props: Props) => {
     updateEvents([
       ...userEvents,
       newMeeting,
+<<<<<<< HEAD
     ], user);
+=======
+    ]);
+    toggleDappEvent(true);
+>>>>>>> add onboarding for dapp
     handleClose();
   };
 
@@ -155,7 +178,8 @@ const AppUI = (props: Props) => {
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
   };
-
+console.log("+++++++");
+console.log(toggleDapp);
   return (
     <BrowserRouter>
       <div className="App">
@@ -165,6 +189,7 @@ const AppUI = (props: Props) => {
           loggedIn={loggedIn}
           onLogOut={onLogOut}
         />
+<<<<<<< HEAD
         <Switch>
           <Route exact path="/" render={() => <Home loggedIn={loggedIn} />} />
           <PrivateRoute
@@ -190,6 +215,11 @@ const AppUI = (props: Props) => {
         </Switch>
       </div>
     </BrowserRouter>
+=======
+      </Dialog>
+      <OnboardingComponent isVisible={toggleDapp} onOnboardingDone={onOnboardingDone}/>
+    </div>
+>>>>>>> add onboarding for dapp
   );
 };
 

@@ -29,7 +29,11 @@ export const C = {
   LOG_OUT: 'LOG_OUT',
 =======
   TOGGLE_DAPP: 'TOGGLE_DAPP',
+<<<<<<< HEAD
 >>>>>>> add state to open a dapp at submit new meeting event
+=======
+  ONBOARDING_DONE: 'ONBOARDING_DONE',
+>>>>>>> add onboarding for dapp
 };
 
 /**

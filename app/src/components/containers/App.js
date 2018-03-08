@@ -7,19 +7,24 @@ import {
   updateUserEvents,
   updateUserData,
 <<<<<<< HEAD
+<<<<<<< HEAD
   logOutUser,
 =======
   toggleDapp,
 >>>>>>> add state to open a dapp at submit new meeting event
+=======
+  onToggleDapp,
+  onboardingDone,
+>>>>>>> add onboarding for dapp
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
 
 const mapStateToProps = state => (
   {
-    toggleDapp: state.toggleDapp,
     userOpenNew: state.userOpenNew,
     userOpenUpdate: state.userOpenUpdate,
+    toggleDapp: state.toggleDapp,
     userBuffer: state.userBuffer,
     userEvents: state.userEvents,
     user: state.user,
@@ -50,9 +55,18 @@ const mapDispatchToProps = dispatch => (
 =======
     submitEvent(event) {
       dispatch(submitUserEvent(event));
+<<<<<<< HEAD
       dispatch(toggleDapp())
 >>>>>>> add state to open a dapp at submit new meeting event
+=======
+>>>>>>> add onboarding for dapp
     },
+    toggleDappEvent(toggle) {
+      dispatch(onToggleDapp(toggle));
+    },
+    onOnboardingDone(event) {
+      dispatch(onboardingDone(event))
+    }
   }
 );
 
