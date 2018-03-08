@@ -2,6 +2,12 @@
 import { C } from '../constants';
 
 
+export const updateUserEvents = (userEvents: Array<Object>) => (
+  {
+    type: C.UPDATE_MEETINGS,
+    payload: userEvents,
+  });
+
 export const updateUserData = (user: Object) => (
   {
     type: C.UPDATE_USER,
@@ -27,12 +33,6 @@ export const updateUserLoginField = (login: Object) => (
   {
     type: C.UPDATE_LOGIN_FIELD,
     payload: login,
-  });
-
-export const removeEvent = (events: Array<Object>) => (
-  {
-    type: C.REMOVE_EVENT,
-    payload: events,
   });
 
 export const submitUserLogin = () => (
@@ -100,10 +100,4 @@ export const updateUserField = (field: string, value: string) => (
       field,
       value,
     },
-  });
-
-export const submitUserEvent = (event: Object) => (
-  {
-    type: C.SUBMIT_MEETING,
-    payload: event,
   });

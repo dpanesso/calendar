@@ -25,10 +25,9 @@ type Props = {
   openModal: Function,
   closeModal: Function,
   updateField: Function,
-  submitEvent: Function,
+  updateEvents: Function,
   updateUser: Function,
   logOut: Function,
-  remove: Function,
 };
 
 const AppUI = (props: Props) => {
@@ -42,10 +41,9 @@ const AppUI = (props: Props) => {
     openModal,
     closeModal,
     updateField,
-    submitEvent,
+    updateEvents,
     updateUser,
     logOut,
-    remove,
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -65,10 +63,10 @@ const AppUI = (props: Props) => {
       start,
       end,
     };
-    submitEvent([
+    updateEvents([
       ...userEvents,
       newMeeting,
-    ]);
+    ], user);
     handleClose();
   };
 
@@ -80,7 +78,7 @@ const AppUI = (props: Props) => {
     evt.end = userBuffer.end;
     // We add the new event at the end of the array
     newState[userBuffer.id] = evt;
-    submitEvent(newState);
+    updateEvents(newState);
     handleClose();
   };
 
@@ -98,9 +96,25 @@ const AppUI = (props: Props) => {
   };
 
   const onRemove = () => {
-    userEvents.splice(userBuffer.id, 1);
-    const sanitized = sanitizeArray(userEvents);
-    remove(sanitized);
+    const localEvents = userEvents.slice(); // cloneuserEvents to prevent mutation
+    localEvents.splice(userBuffer.id, 1);
+    const sanitized = sanitizeArray(localEvents);
+    const url = prefixURL('api/pri/user');
+    const { token } = user;
+    const postData = {
+      token,
+      userEvents: sanitized,
+    };
+    customPost(url, postData)
+      .then((res) => {
+        if (res.error) {
+          throw new Error('Could not add event to database.');
+        }
+        if (res.success) {
+          updateEvents(sanitized);
+        }
+      })
+      .catch(err => console.error(err));
     handleClose();
   };
 

@@ -11,6 +11,13 @@ const createUser = (username: string, email: string, password: string): Promise<
   });
 });
 
+const updateUser = (username: string, email: string, HASHpwd: string, userEvents: string): Promise<any> => new Promise((resolve, reject) => {
+  client.hmset(`user:${email}`, ['HASHpwd', HASHpwd, 'email', email, 'username', username, 'userEvents', userEvents], (err, reply) => {
+    if (err) reject(err);
+    resolve(reply);
+  });
+});
+
 const getUserById = (email: string): Promise<any> => new Promise((resolve, reject) => {
   client.hgetall(`user:${email}`, (err, reply) => {
     if (err) reject(err);
@@ -48,6 +55,7 @@ const isTokenBlacklisted = (token: string): Promise<any> => new Promise((resolve
 
 module.exports = {
   createUser,
+  updateUser,
   getUserById,
   addTokenToBlacklist,
   getTokenBlacklist,

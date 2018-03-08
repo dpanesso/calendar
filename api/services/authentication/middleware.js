@@ -1,4 +1,4 @@
-const { getUserById, isTokenBlacklisted, addTokenToBlacklist } = require('../database/queries');
+const { updateUser, getUserById, isTokenBlacklisted, addTokenToBlacklist } = require('../database/queries');
 const { validPassword } = require('./helpers');
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
@@ -83,7 +83,6 @@ const validateToken = (req, res, next) => { // eslint-disable-line consistent-re
 
 const blacklistToken = (req, res, next) => {
   const { body } = req;
-  console.log(body);
   if (body.token) {
     const oldToken = body.token;
     addTokenToBlacklist(oldToken);
@@ -93,10 +92,39 @@ const blacklistToken = (req, res, next) => {
   }
 };
 
+const updateUserEvents = (req, res, next) => {
+  const { user } = req.body;
+  if (!user) {
+    res.status(401).send(exceptions.userNotFound).end();
+    return;
+  }
+  const { email, userEvents } = user;
+  getUserById(email)
+    .then((dbUser) => {
+      if (!dbUser) {
+        throw new Error(exceptions.dbUserNotFound);
+      }
+      localUser = Object.assign({}, dbUser);
+      localUser.userEvents = userEvents;
+      const { username, HASHpwd } = localUser;
+      updateUser(username, email, HASHpwd, userEvents)
+        .then((reply) => {
+          console.log('|||||||||||||| UPDATE USER');
+          resolve();
+          next();
+        })
+        .catch(err => reject(err));
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });
+};
+
 
 module.exports = {
   verifyUser,
   generateToken,
   validateToken,
   blacklistToken,
+  updateUserEvents,
 };

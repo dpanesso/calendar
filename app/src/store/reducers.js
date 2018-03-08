@@ -185,9 +185,7 @@ export const userBuffer = (state: Object = {}, action: Object) => {
 
 export const userEvents = (state: Array<Object> = [], action: Object) => {
   switch (action.type) {
-    case C.SUBMIT_MEETING:
-      return action.payload;
-    case C.REMOVE_EVENT:
+    case C.UPDATE_MEETINGS:
       return action.payload;
     default:
       return state;
