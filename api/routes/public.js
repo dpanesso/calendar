@@ -4,6 +4,7 @@ const {
   verifyUser,
   generateToken,
 } = require('../services/authentication/middleware');
+const messages = require('../config/messages');
 
 const router = new express.Router();
 
@@ -16,7 +17,7 @@ router.post('/signup', (req, res) => {
           errors: result.errors,
         });
       }
-      return res.status(200).send({ success: 'Account successfully created. Please log in' }).end();
+      return res.status(200).send({ success: messages.accountCreated }).end();
     })
     .catch((err) => {
       throw new Error(err.message);

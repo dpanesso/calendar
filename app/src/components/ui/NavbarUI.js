@@ -26,6 +26,8 @@ const NavbarUI = (props: Props) => {
     loggedIn,
   } = props;
 
+  const displayUser = loggedIn ? { display: 'block' } : { display: 'none' };
+
   return (
     <div className="navbar">
       <ul>
@@ -44,7 +46,7 @@ const NavbarUI = (props: Props) => {
           <p className="navbarLink">Home</p>
         </li>
         <li>
-          <p className="navbarLink" onClick={onLogOut}>Sign Out</p>
+          <p className="navbarLink" onClick={onLogOut} style={displayUser}>Sign Out</p>
         </li>
         <li>
           <Profile
@@ -54,10 +56,10 @@ const NavbarUI = (props: Props) => {
           />
         </li>
         <li>
-          <p className="navbarLink">Calendar</p>
+          <p className="navbarLink" style={displayUser}>Calendar</p>
         </li>
         <li>
-          <p className="navbarLink">Rooms</p>
+          <p className="navbarLink" style={displayUser}>Rooms</p>
         </li>
       </ul>
     </div>

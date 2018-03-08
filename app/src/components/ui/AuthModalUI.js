@@ -62,7 +62,7 @@ class AuthModalUI extends Component<Props> {
       password: encryptedPassword,
     };
     const url = prefixURL('api/pub/login');
-    customPost(url, formData, '')
+    customPost(url, formData)
       .then((response) => {
         if (response.token) {
           console.log(response.token);
@@ -104,11 +104,11 @@ class AuthModalUI extends Component<Props> {
       confirmPassword,
     };
     const url = prefixURL('api/pub/signup');
-    customPost(url, formData, '')
+    customPost(url, formData)
       .then((response) => {
         const errors = response.errors ? response.errors : {};
         if (errors.summary) {
-          this.props.failSignup(errors)
+          this.props.failSignup(errors);
         } else {
           this.props.successSignup(response.success);
           this.props.changeTab();

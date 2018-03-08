@@ -7,6 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from '../containers/Navbar';
 import Modal from './Modal';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
+import { prefixURL, customPost } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
 import '../../styles/calendar.css';
 
@@ -94,7 +95,17 @@ const AppUI = (props: Props) => {
   };
 
   const onLogOut = () => {
-    localStorage.clear();
+    const url = prefixURL('api/pri/logout');
+    const postData = { token: user.token };
+    customPost(url, postData)
+      .then((response) => {
+        if (response.success) {
+          console.log(response.success);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     logOut();
   };
 

@@ -43,15 +43,17 @@ const generateToken = (req, res, next) => {
 
 
 const validateToken = (req, res, next) => { // eslint-disable-line consistent-return
-  if (req.headers.authorization && req.headers.authorization.token) {
-    const token = req.headers.authorization;
+  const { token } = req.body;
+  if (token) {
     // Check if token not in blacklistToken
     isTokenBlacklisted(token)
       .then((isBlacklisted) => {
         if (isBlacklisted) {
+          console.log(exceptions.tokenBlacklisted);
           res.status(401).send(exceptions.tokenBlacklisted).end();
           return;
         } // if token is not blacklisted, check if it is not expired
+        console.log('NOT GOING HERE');
         jwt.verify(
           token,
           config.jwt.passphrase,
@@ -60,7 +62,7 @@ const validateToken = (req, res, next) => { // eslint-disable-line consistent-re
               res.status(401).send(exceptions.internalError).end();
               return;
             }
-            const currentDate = new Date();
+            const currentDate = Math.floor(new Date().getTime() / 1000);
             const tokenExpirationDate = decode.exp;
             if (tokenExpirationDate < currentDate) {
               res.status(401).send(exceptions.expiredToken).end();
@@ -81,8 +83,9 @@ const validateToken = (req, res, next) => { // eslint-disable-line consistent-re
 
 const blacklistToken = (req, res, next) => {
   const { body } = req;
-  if (body.user && body.user.token) {
-    const oldToken = body.user.token;
+  console.log(body);
+  if (body.token) {
+    const oldToken = body.token;
     addTokenToBlacklist(oldToken);
     next();
   } else {

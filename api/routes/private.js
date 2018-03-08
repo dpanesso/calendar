@@ -3,6 +3,7 @@ const {
   validateToken,
   blacklistToken,
 } = require('../services/authentication/middleware');
+const messages = require('../config/messages');
 
 const router = new express.Router();
 
@@ -10,6 +11,9 @@ router.post(
   '/logout',
   validateToken,
   blacklistToken,
-  (req, res) => res.status(200).send({ sucsess: 'Successfully logged out' }).end(),
+  (req, res) => {
+    console.log(messages);
+    res.status(200).send({ success: messages.successLogOut }).end();
+  },
 );
 module.exports = router;

@@ -47,7 +47,6 @@ const processSignupForm = (payload: Object): Promise<Object> => new Promise((res
       } else {
         createUser(username, email, password)
           .then((reply) => {
-            console.log('||||||||||||||||||||||||||| CREATE USER |||||||||');
             console.log(reply);
             const result = {
               success: isFormValid,

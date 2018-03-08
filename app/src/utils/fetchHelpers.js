@@ -12,7 +12,7 @@ export const customFetch = (url: string): Promise<Object> => fetch(url)
   .then(response => response.json())
   .catch(err => err);
 
-export const customPost = (url: string, data: Object, token: string): Promise<any> => new Promise((resolve, reject) => {
+export const customPost = (url: string, data: Object): Promise<any> => new Promise((resolve, reject) => {
   fetch(url, {
     body: JSON.stringify(data), // must match 'Content-Type' header
     cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
