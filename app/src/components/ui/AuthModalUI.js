@@ -36,6 +36,7 @@ type Props = {
   successSignup: Function,
   failSignup: Function,
   updateUser: Function,
+  onLogin: Function,
 };
 
 class AuthModalUI extends Component<Props> {
@@ -67,6 +68,7 @@ class AuthModalUI extends Component<Props> {
         const errors = response.errors ? response.errors : {};
         if (errors.summary) this.props.failLogin(errors);
         if (response.user) {
+          this.props.onLogin(response.user.meetings);
           this.props.successLogin();
           this.props.updateUser(response.user);
           this.props.closeModal();

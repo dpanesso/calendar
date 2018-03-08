@@ -9,9 +9,8 @@ import Rooms from '../ui/Rooms';
 import Whoops404 from '../ui/Whoops404';
 import PrivateRoute from '../../utils/PrivateRoute';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
-import { prefixURL, customPost } from '../../utils/fetchHelpers';
+import { prefixURL, customPost, fetchUpdateUserEvents } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
-import sanitizeArray from '../../utils/array';
 import '../../styles/calendar.css';
 
 
@@ -55,30 +54,14 @@ const AppUI = (props: Props) => {
     closeModal();
   };
   const onNewEvent = () => {
-    const id = userEvents.length;
-    const { title, start, end } = userBuffer;
-    const newMeeting = {
-      id,
-      title,
-      start,
-      end,
-    };
-    updateEvents([
-      ...userEvents,
-      newMeeting,
-    ], user);
+    fetchUpdateUserEvents(userEvents, userBuffer, user, 'new')
+      .then(newEvents => updateEvents(newEvents));
     handleClose();
   };
 
   const onUpdateEvent = () => {
-    const newState = userEvents;
-    const evt = userEvents[userBuffer.id];
-    evt.title = userBuffer.title;
-    evt.start = userBuffer.start;
-    evt.end = userBuffer.end;
-    // We add the new event at the end of the array
-    newState[userBuffer.id] = evt;
-    updateEvents(newState);
+    fetchUpdateUserEvents(userEvents, userBuffer, user, 'update')
+      .then(newEvents => updateEvents(newEvents));
     handleClose();
   };
 
@@ -96,25 +79,13 @@ const AppUI = (props: Props) => {
   };
 
   const onRemove = () => {
-    const localEvents = userEvents.slice(); // cloneuserEvents to prevent mutation
-    localEvents.splice(userBuffer.id, 1);
-    const sanitized = sanitizeArray(localEvents);
-    const url = prefixURL('api/pri/user');
-    const { token } = user;
-    const postData = {
-      token,
-      userEvents: sanitized,
-    };
-    customPost(url, postData)
-      .then((res) => {
-        if (res.error) {
-          throw new Error('Could not add event to database.');
-        }
-        if (res.success) {
-          updateEvents(sanitized);
-        }
-      })
-      .catch(err => console.error(err));
+    fetchUpdateUserEvents(userEvents, userBuffer, user, 'remove')
+      .then(newEvents => updateEvents(newEvents));
+    handleClose();
+  };
+
+  const onLogin = (events) => {
+    updateEvents(events);
     handleClose();
   };
 
@@ -163,6 +134,7 @@ const AppUI = (props: Props) => {
           user={user}
           updateUser={updateUser}
           loggedIn={loggedIn}
+          onLogin={onLogin}
           onLogOut={onLogOut}
         />
         <Switch>

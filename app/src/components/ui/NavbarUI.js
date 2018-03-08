@@ -10,6 +10,7 @@ type Props = {
   openModal: Function,
   closeModal: Function,
   updateUser: Function,
+  onLogin: Function,
   onLogOut: Function,
   isLoginModalOpen: boolean,
   user: Object,
@@ -21,6 +22,7 @@ const NavbarUI = (props: Props) => {
     openModal,
     closeModal,
     updateUser,
+    onLogin,
     onLogOut,
     isLoginModalOpen,
     user,
@@ -40,7 +42,11 @@ const NavbarUI = (props: Props) => {
             contentStyle={{ width: '350px' }}
             autoScrollBodyContent={true}
           >
-            <AuthModal closeModal={closeModal} updateUser={updateUser} />
+            <AuthModal
+              closeModal={closeModal}
+              updateUser={updateUser}
+              onLogin={onLogin}
+            />
           </Dialog>
         </li>
         <li>

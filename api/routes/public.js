@@ -28,12 +28,18 @@ router.post(
   '/login',
   verifyUser,
   generateToken,
-  (req, res) => res.status(200).send({
-    user: {
-      username: res.user.username,
-      meetings: {},
-      token: res.token,
-    },
-  }).end(),
+  (req, res) => {
+    const { user } = res;
+    const { username, email } = user;
+    const meetings = user.userEvents ? JSON.parse(user.userEvents) : [];
+    res.status(200).send({
+      user: {
+        username,
+        email,
+        meetings,
+        token: res.token,
+      },
+    }).end();
+  },
 );
 module.exports = router;

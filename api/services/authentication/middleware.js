@@ -1,4 +1,9 @@
-const { updateUser, getUserById, isTokenBlacklisted, addTokenToBlacklist } = require('../database/queries');
+const {
+  updateUser,
+  getUserById,
+  isTokenBlacklisted,
+  addTokenToBlacklist,
+} = require('../database/queries');
 const { validPassword } = require('./helpers');
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
@@ -10,6 +15,7 @@ const verifyUser = (req, res, next) => {
   getUserById(body.email)
     .then((user) => {
       //  Validate user format
+      console.log(user);
       if (!user) {
         res.status(401).send(exceptions.unauthorized).end();
         return;
@@ -53,7 +59,6 @@ const validateToken = (req, res, next) => { // eslint-disable-line consistent-re
           res.status(401).send(exceptions.tokenBlacklisted).end();
           return;
         } // if token is not blacklisted, check if it is not expired
-        console.log('NOT GOING HERE');
         jwt.verify(
           token,
           config.jwt.passphrase,
@@ -93,27 +98,30 @@ const blacklistToken = (req, res, next) => {
 };
 
 const updateUserEvents = (req, res, next) => {
-  const { user } = req.body;
-  if (!user) {
-    res.status(401).send(exceptions.userNotFound).end();
+  const { newEvents, user } = req.body;
+  if (!newEvents) {
+    res.status(401).send(exceptions.userEventsNotFound).end();
     return;
   }
-  const { email, userEvents } = user;
+  const { email } = user;
   getUserById(email)
     .then((dbUser) => {
       if (!dbUser) {
         throw new Error(exceptions.dbUserNotFound);
       }
-      localUser = Object.assign({}, dbUser);
-      localUser.userEvents = userEvents;
-      const { username, HASHpwd } = localUser;
-      updateUser(username, email, HASHpwd, userEvents)
+      const strUserEvents = JSON.stringify(newEvents);
+      updateUser(email, strUserEvents)
         .then((reply) => {
-          console.log('|||||||||||||| UPDATE USER');
-          resolve();
+          if (reply !== 'OK') {
+            res.status(500).send(exceptions.errorUpdateUser).end();
+            return;
+          }
+          res.reply = reply;
           next();
         })
-        .catch(err => reject(err));
+        .catch((err) => {
+          throw new Error(err.message);
+        });
     })
     .catch((err) => {
       throw new Error(err.message);

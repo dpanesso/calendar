@@ -18,11 +18,11 @@ router.post(
 );
 
 router.post(
-  '/user',
+  '/update/user/events',
   validateToken,
   updateUserEvents,
   (req, res) => {
-    res.status(200).send({ success: messages.successLogOut }).end();
+    res.status(200).send({ success: messages.successUserEventsUpdate }).end();
   },
 );
 
