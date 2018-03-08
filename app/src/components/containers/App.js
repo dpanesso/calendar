@@ -6,6 +6,7 @@ import {
   updateUserField,
   submitUserEvent,
   updateUserData,
+  logOutUser,
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
@@ -25,6 +26,9 @@ const mapDispatchToProps = dispatch => (
   {
     updateUser(user) {
       dispatch(updateUserData(user));
+    },
+    logOut() {
+      dispatch(logOutUser());
     },
     openModal(kind, event) {
       dispatch(openUserModal(kind, event));

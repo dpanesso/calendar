@@ -6,20 +6,24 @@ import Profile from './Profile';
 import '../../styles/navbar.css';
 
 type Props = {
-  isLoginModalOpen: boolean,
   openModal: Function,
   closeModal: Function,
-  user: Object,
   updateUser: Function,
+  onLogOut: Function,
+  isLoginModalOpen: boolean,
+  user: Object,
+  loggedIn: boolean,
 };
 
 const NavbarUI = (props: Props) => {
   const {
-    isLoginModalOpen,
     openModal,
     closeModal,
-    user,
     updateUser,
+    onLogOut,
+    isLoginModalOpen,
+    user,
+    loggedIn,
   } = props;
 
   return (
@@ -40,10 +44,14 @@ const NavbarUI = (props: Props) => {
           <p className="navbarLink">Home</p>
         </li>
         <li>
-          <p className="navbarLink">Sign Out</p>
+          <p className="navbarLink" onClick={onLogOut}>Sign Out</p>
         </li>
         <li>
-          <Profile user={user} openModal={openModal} />
+          <Profile
+            user={user}
+            openModal={openModal}
+            loggedIn={loggedIn}
+          />
         </li>
         <li>
           <p className="navbarLink">Calendar</p>

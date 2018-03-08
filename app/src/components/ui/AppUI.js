@@ -26,6 +26,7 @@ type Props = {
   updateField: Function,
   submitEvent: Function,
   updateUser: Function,
+  logOut: Function,
 };
 
 const AppUI = (props: Props) => {
@@ -41,6 +42,7 @@ const AppUI = (props: Props) => {
     updateField,
     submitEvent,
     updateUser,
+    logOut,
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -91,6 +93,11 @@ const AppUI = (props: Props) => {
     }
   };
 
+  const onLogOut = () => {
+    localStorage.clear();
+    logOut();
+  };
+
   const onUpdateFieldEvent = (key: string, value: any) => {
     const { start, end } = userBuffer;
     switch (key) {
@@ -116,7 +123,12 @@ const AppUI = (props: Props) => {
 
   return (
     <div className="App">
-      <Navbar user={user} updateUser={updateUser} loggedIn={loggedIn}/>
+      <Navbar
+        user={user}
+        updateUser={updateUser}
+        loggedIn={loggedIn}
+        onLogOut={onLogOut}
+      />
       <BigCalendar
         selectable
         events={parseDates(userEvents)}

@@ -7,6 +7,8 @@ export const user = (state: Object = {}, action: Object) => {
   switch (action.type) {
     case C.UPDATE_USER:
       return action.payload;
+    case C.LOG_OUT:
+      return {};
     default:
       return state;
   }
@@ -16,7 +18,7 @@ export const loggedIn = (state: boolean = false, action: Object) => {
   switch (action.type) {
     case C.SUCCESS_LOGIN:
       return true;
-    case C.SUCCESS_LOGOUT:
+    case C.LOG_OUT:
       return false;
     default:
       return state;

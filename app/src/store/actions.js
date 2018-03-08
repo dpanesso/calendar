@@ -68,6 +68,11 @@ export const failUserSignup = (errors: Object) => (
     payload: errors,
   });
 
+export const logOutUser = () => (
+  {
+    type: C.LOG_OUT,
+  });
+
 export const openUserModal = (kind: boolean, event: Object) => (
   {
     type: C.OPEN_USER_MODAL,
