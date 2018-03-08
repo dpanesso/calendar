@@ -187,7 +187,8 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
   switch (action.type) {
     case C.SUBMIT_MEETING:
       return action.payload;
-
+    case C.REMOVE_EVENT:
+      return action.payload;
     default:
       return state;
   }

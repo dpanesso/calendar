@@ -15,6 +15,7 @@ type Props = {
   handleOpen: Function,
   handleClose: Function,
   onSubmit: Function,
+  onRemove: Function,
   onUpdateFieldEvent: Function,
   open: boolean,
   userOpenNew: boolean,
@@ -32,9 +33,11 @@ const Calendar = (props: Props) => {
     open,
     userOpenNew,
     userBuffer,
+    onRemove,
   } = props;
   return (
     <div>
+      <h1>My calendar</h1>
       <BigCalendar
         selectable
         events={events}
@@ -57,6 +60,7 @@ const Calendar = (props: Props) => {
           onUpdateFieldEvent={onUpdateFieldEvent}
           handleClose={handleClose}
           onSubmit={onSubmit}
+          onRemove={onRemove}
         />
       </Dialog>
     </div>

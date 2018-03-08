@@ -64,16 +64,10 @@ class AuthModalUI extends Component<Props> {
     const url = prefixURL('api/pub/login');
     customPost(url, formData)
       .then((response) => {
-        if (response.token) {
-          console.log(response.token);
-        }
         const errors = response.errors ? response.errors : {};
         if (errors.summary) this.props.failLogin(errors);
         if (response.user) {
           this.props.successLogin();
-          if (response.user.token) {
-            // localStorage.access_token = response.user.token;
-          }
           this.props.updateUser(response.user);
           this.props.closeModal();
         }

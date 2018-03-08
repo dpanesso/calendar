@@ -29,6 +29,12 @@ export const updateUserLoginField = (login: Object) => (
     payload: login,
   });
 
+export const removeEvent = (events: Array<Object>) => (
+  {
+    type: C.REMOVE_EVENT,
+    payload: events,
+  });
+
 export const submitUserLogin = () => (
   {
     type: C.SUBMIT_LOGIN,

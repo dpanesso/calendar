@@ -29,7 +29,6 @@ router.post(
   verifyUser,
   generateToken,
   (req, res) => res.status(200).send({
-    token: res.token,
     user: {
       username: res.user.username,
       meetings: {},

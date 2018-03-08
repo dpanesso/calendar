@@ -11,6 +11,7 @@ import PrivateRoute from '../../utils/PrivateRoute';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import { prefixURL, customPost } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
+import sanitizeArray from '../../utils/array';
 import '../../styles/calendar.css';
 
 
@@ -27,6 +28,7 @@ type Props = {
   submitEvent: Function,
   updateUser: Function,
   logOut: Function,
+  remove: Function,
 };
 
 const AppUI = (props: Props) => {
@@ -43,6 +45,7 @@ const AppUI = (props: Props) => {
     submitEvent,
     updateUser,
     logOut,
+    remove,
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -75,6 +78,7 @@ const AppUI = (props: Props) => {
     evt.title = userBuffer.title;
     evt.start = userBuffer.start;
     evt.end = userBuffer.end;
+    // We add the new event at the end of the array
     newState[userBuffer.id] = evt;
     submitEvent(newState);
     handleClose();
@@ -91,6 +95,13 @@ const AppUI = (props: Props) => {
       default:
         console.log(`onSubmit - wrong key: ${key}`);
     }
+  };
+
+  const onRemove = () => {
+    userEvents.splice(userBuffer.id, 1);
+    const sanitized = sanitizeArray(userEvents);
+    remove(sanitized);
+    handleClose();
   };
 
   const onLogOut = () => {
@@ -154,6 +165,7 @@ const AppUI = (props: Props) => {
             onUpdateFieldEvent={onUpdateFieldEvent}
             handleClose={handleClose}
             onSubmit={onSubmit}
+            onRemove={onRemove}
           />
           <PrivateRoute
             path="/rooms"

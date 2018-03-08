@@ -7,6 +7,7 @@ import {
   submitUserEvent,
   updateUserData,
   logOutUser,
+  removeEvent,
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
@@ -39,8 +40,11 @@ const mapDispatchToProps = dispatch => (
     updateField(field, value) {
       dispatch(updateUserField(field, value));
     },
-    submitEvent(event) {
-      dispatch(submitUserEvent(event));
+    submitEvent(events) {
+      dispatch(submitUserEvent(events));
+    },
+    remove(events) {
+      dispatch(removeEvent(events));
     },
   }
 );

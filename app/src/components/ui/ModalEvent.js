@@ -9,6 +9,7 @@ type Props = {
   userBuffer: Object,
   onUpdateFieldEvent: Function,
   onSubmit: Function,
+  onRemove: Function,
   handleClose: Function,
   type: string,
 };
@@ -19,6 +20,7 @@ const ModalEvent = (props: Props) => {
     onUpdateFieldEvent,
     onSubmit,
     handleClose,
+    onRemove,
     type,
   } = props;
   const {
@@ -26,6 +28,9 @@ const ModalEvent = (props: Props) => {
     start,
     end,
   } = userBuffer;
+  const displayRemove = type === 'update meeting' ?
+    { display: 'inline-block' } :
+    { display: 'none' };
 
   return (
     <div>
@@ -69,9 +74,15 @@ const ModalEvent = (props: Props) => {
         onChange={(evt, value) => onUpdateFieldEvent('end time', value)}
       />
       <RaisedButton
+        label="Remove"
+        primary={true}
+        onClick={onRemove}
+        style={displayRemove}
+      />
+      <RaisedButton
         label="Cancel"
         primary={true}
-        style={{ marginRight: '20px' }}
+        style={{ margin: '10px 10px', textAlign: 'center' }}
         onClick={handleClose}
       />
       <RaisedButton
