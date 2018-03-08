@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import SimpleStorageContract from "../../dapp/SimpleStoreContract";
 import "./DappController.css";
 
 /**
  * define our actual DApp that works with a web3 instance on a given account.
  */
+ const errorText = "Should be a number"
 export default class DappController extends Component {
   static propTypes = {
     web3: PropTypes.object.isRequired,
@@ -22,7 +24,9 @@ export default class DappController extends Component {
     simpleStorage: null,
     error: null,
     pending: false,
-    tx: null
+    tx: null,
+    errorTextValue: false,
+    errorTextFees: false,
   };
 
   async componentDidMount() {
@@ -43,7 +47,7 @@ export default class DappController extends Component {
         this.setState({ storageValue });
       }
     );
-  }
+  };
 
   componentWillUnmount() {
     try {
@@ -52,18 +56,36 @@ export default class DappController extends Component {
       // NB MetaMask currently have an error thrown
       console.error(e);
     }
-  }
+  };
 
   onChangeInput = e => {
-    this.setState({ localInputValue: parseInt(e.target.value, 10) });
+    const value = e.target.value;
+
+    if(isNaN(value)){
+      this.setState({ errorTextValue: true });
+    } else if(value){
+      this.setState({
+        localInputValue: parseInt(value, 10),
+        errorTextValue: false
+       });
+    }
   };
 
   onChangeGasInput = e => {
-    this.setState({ gasPriceGWEI: parseInt(e.target.value, 10) });
+    const value = e.target.value;
+    if(isNaN(value)){
+      this.setState({ errorTextFees: true });
+    } else if(value){
+      this.setState({
+        gasPriceGWEI: parseInt(value, 10),
+        errorTextFees: false
+       });
+    }
   };
 
   onSetButton = async () => {
-    const { simpleStorage, localInputValue, gasPriceGWEI } = this.state;
+    const { simpleStorage, localInputValue, gasPriceGWEI } = this.state
+    console.log(this.state);
     const { account } = this.props;
     if (!simpleStorage) return;
     this.setState({ error: null, pending: true });
@@ -95,7 +117,9 @@ export default class DappController extends Component {
       gasPriceGWEI,
       error,
       pending,
-      tx
+      tx,
+      errorTextValue,
+      errorTextFees
     } = this.state;
 
     if (!simpleStorage) {
@@ -107,27 +131,18 @@ export default class DappController extends Component {
     }
 
     return (
-      <div className="DApp">
-        <p>
-          Account <code>{account}</code>{" "}
-          <RaisedButton
-            label="Log out"
-            primary={true}
-            onClick={onLogout}
-            />
-        </p>
-        <p>
-          <label>
-            <span>Set new Value</span>
-            <input
-              type="number"
-              min={1}
-              step={1}
-              value={localInputValue}
+      <div className="DappController">
+        <div>
+          <div>Account : <code>{account}</code>{" "}</div>
+        </div>
+        <div>
+            <TextField
+              hintText="Enter a seed (number)..."
+              errorText={errorTextValue ? errorText : ""}
               onChange={this.onChangeInput}
-            />
+              />
             {pending ? (
-              "..."
+              <div>Waiting for validation ...</div>
             ) : (
 
               <RaisedButton
@@ -137,25 +152,20 @@ export default class DappController extends Component {
                 disabled={localInputValue === storageValue}
                 />
             )}
-          </label>
-        </p>
-        <p>
-          <label>
-            <span>Gas Price (GWEI)</span>
-            <input
-              type="number"
-              min={1}
-              value={gasPriceGWEI}
-              onChange={this.onChangeGasInput}
+        </div>
+        <div>
+          <TextField
+            hintText="Gas Price (number in GWEI)"
+            errorText={errorTextFees ? errorText : ""}
+            onChange={this.onChangeGasInput}
             />
-          </label>
-        </p>
-        <p>{tx ? "Transaction: " + tx : null}</p>
-        {error ? (
-          <div className="error">
-            {String((error && error.message) || error)}
-          </div>
-        ) : null}
+        </div>
+          <p>{tx ? "Transaction: " + tx : null}</p>
+          {error ? (
+            <div className="error">
+              {String((error && error.message) || error)}
+            </div>
+          ) : null}
       </div>
     );
   }
