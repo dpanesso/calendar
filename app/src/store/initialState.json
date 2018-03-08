@@ -1,5 +1,6 @@
 {
   "user": {},
+  "loggedIn": false,
   "isLoginModalOpen": false,
   "tabvalue": "a",
   "loginLoader": false,

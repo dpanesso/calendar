@@ -26,7 +26,6 @@ const NavbarUI = (props: Props) => {
     <div className="navbar">
       <ul>
         <li>
-          <Profile user={user} openModal={openModal} />
           <Dialog
             modal={false}
             open={isLoginModalOpen}
@@ -36,6 +35,18 @@ const NavbarUI = (props: Props) => {
           >
             <AuthModal closeModal={closeModal} updateUser={updateUser} />
           </Dialog>
+        </li>
+        <li>
+          <p className="navbarLink">Home</p>
+        </li>
+        <li>
+          <p className="navbarLink">Sign Out</p>
+        </li>
+        <li>
+          <Profile user={user} openModal={openModal} />
+        </li>
+        <li>
+          <p className="navbarLink">Calendar</p>
         </li>
         <li>
           <p className="navbarLink">Rooms</p>

@@ -23,6 +23,7 @@ export const C = {
   SUCCESS_SIGNUP: 'SUCCESS_SIGNUP',
   FAIL_SIGNUP: 'FAIL_SIGNUP',
   UPDATE_USER: 'UPDATE_USER',
+  LOG_OUT: 'LOG_OUT',
 };
 
 /**

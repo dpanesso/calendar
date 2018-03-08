@@ -16,6 +16,7 @@ BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 type Props = {
   user: Object,
+  loggedIn: boolean,
   userOpenNew: boolean,
   userOpenUpdate: boolean,
   userBuffer: Object,
@@ -30,6 +31,7 @@ type Props = {
 const AppUI = (props: Props) => {
   const {
     user,
+    loggedIn,
     userOpenNew,
     userOpenUpdate,
     userBuffer,
@@ -114,7 +116,7 @@ const AppUI = (props: Props) => {
 
   return (
     <div className="App">
-      <Navbar user={user} updateUser={updateUser} />
+      <Navbar user={user} updateUser={updateUser} loggedIn={loggedIn}/>
       <BigCalendar
         selectable
         events={parseDates(userEvents)}

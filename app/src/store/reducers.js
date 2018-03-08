@@ -12,6 +12,17 @@ export const user = (state: Object = {}, action: Object) => {
   }
 };
 
+export const loggedIn = (state: boolean = false, action: Object) => {
+  switch (action.type) {
+    case C.SUCCESS_LOGIN:
+      return true;
+    case C.SUCCESS_LOGOUT:
+      return false;
+    default:
+      return state;
+  }
+};
+
 export const isLoginModalOpen = (state: boolean = false, action: Object) => {
   switch (action.type) {
     case C.OPEN_LOGIN_MODAL:
@@ -182,6 +193,7 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
 
 export default combineReducers({
   user,
+  loggedIn,
   tabvalue,
   loginLoader,
   loginErrors,

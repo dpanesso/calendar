@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.profile:hover {
+  cursor: default;
+}
+
 .profile img {
   border-radius: 100%;
   width: 30px;
@@ -13,4 +17,5 @@
 
 #username {
     color: #f9a799;
+    cursor: default;
 }

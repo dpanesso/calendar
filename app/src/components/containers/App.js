@@ -17,6 +17,7 @@ const mapStateToProps = state => (
     userBuffer: state.userBuffer,
     userEvents: state.userEvents,
     user: state.user,
+    loggedIn: state.loggedIn,
   }
 );
 
