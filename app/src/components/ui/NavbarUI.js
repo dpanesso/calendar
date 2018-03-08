@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import AuthModal from '../containers/AuthModal';
 import Profile from './Profile';
@@ -43,7 +44,9 @@ const NavbarUI = (props: Props) => {
           </Dialog>
         </li>
         <li>
-          <p className="navbarLink">Home</p>
+          <NavLink to="/">
+            <p className="navbarLink">Home</p>
+          </NavLink>
         </li>
         <li>
           <p className="navbarLink" onClick={onLogOut} style={displayUser}>Sign Out</p>
@@ -56,10 +59,14 @@ const NavbarUI = (props: Props) => {
           />
         </li>
         <li>
-          <p className="navbarLink" style={displayUser}>Calendar</p>
+          <NavLink to="/user">
+            <p className="navbarLink" style={displayUser}>Calendar</p>
+          </NavLink>
         </li>
         <li>
-          <p className="navbarLink" style={displayUser}>Rooms</p>
+          <NavLink to="/rooms">
+            <p className="navbarLink" style={displayUser}>Rooms</p>
+          </NavLink>
         </li>
       </ul>
     </div>

@@ -1,10 +1,13 @@
 // @flow
 import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navbar from '../containers/Navbar';
 import Home from '../ui/Home';
 import Calendar from '../ui/Calendar';
+import Rooms from '../ui/Rooms';
+import Whoops404 from '../ui/Whoops404';
+import PrivateRoute from '../../utils/PrivateRoute';
 import { rebuildDate, rebuildTime } from '../../utils/rebuildDate';
 import { prefixURL, customPost } from '../../utils/fetchHelpers';
 import parseDates from '../../utils/parseDates';
@@ -138,20 +141,26 @@ const AppUI = (props: Props) => {
           onLogOut={onLogOut}
         />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/user" render={() => (
-            <Calendar
-              events={parseDates(userEvents)}
-              handleOpen={handleOpen}
-              open={userOpenNew || userOpenUpdate}
-              userOpenNew={userOpenNew}
-              userBuffer={userBuffer}
-              onUpdateFieldEvent={onUpdateFieldEvent}
-              handleClose={handleClose}
-              onSubmit={onSubmit}
-            />)}
+          <Route exact path="/" render={() => <Home loggedIn={loggedIn} />} />
+          <PrivateRoute
+            path="/user"
+            loggedIn={loggedIn}
+            component={Calendar}
+            events={parseDates(userEvents)}
+            handleOpen={handleOpen}
+            open={userOpenNew || userOpenUpdate}
+            userOpenNew={userOpenNew}
+            userBuffer={userBuffer}
+            onUpdateFieldEvent={onUpdateFieldEvent}
+            handleClose={handleClose}
+            onSubmit={onSubmit}
           />
-
+          <PrivateRoute
+            path="/rooms"
+            loggedIn={loggedIn}
+            component={Rooms}
+          />
+          <Route component={Whoops404} />
         </Switch>
       </div>
     </BrowserRouter>
