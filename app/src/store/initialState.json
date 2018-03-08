@@ -1,6 +1,10 @@
 {
   "user": {},
+<<<<<<< HEAD
   "loggedIn": false,
+=======
+  "toggleDapp": false,
+>>>>>>> add state to open a dapp at submit new meeting event
   "isLoginModalOpen": false,
   "tabvalue": "a",
   "loginLoader": false,

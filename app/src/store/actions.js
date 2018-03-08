@@ -101,3 +101,17 @@ export const updateUserField = (field: string, value: string) => (
       value,
     },
   });
+<<<<<<< HEAD
+=======
+
+export const submitUserEvent = (event: Object) => (
+  {
+    type: C.SUBMIT_MEETING,
+    payload: event,
+  });
+
+  export const toggleDapp = () => (
+    {
+      type: C.TOGGLE_DAPP,
+    });
+>>>>>>> add state to open a dapp at submit new meeting event

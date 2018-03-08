@@ -25,7 +25,11 @@ export const C = {
   SUCCESS_SIGNUP: 'SUCCESS_SIGNUP',
   FAIL_SIGNUP: 'FAIL_SIGNUP',
   UPDATE_USER: 'UPDATE_USER',
+<<<<<<< HEAD
   LOG_OUT: 'LOG_OUT',
+=======
+  TOGGLE_DAPP: 'TOGGLE_DAPP',
+>>>>>>> add state to open a dapp at submit new meeting event
 };
 
 /**

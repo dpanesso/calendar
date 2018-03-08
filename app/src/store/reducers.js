@@ -192,6 +192,18 @@ export const userEvents = (state: Array<Object> = [], action: Object) => {
   }
 };
 
+export const toggleDapp = (state: Array<Object> = [], action: Object) => {
+  switch (action.type) {
+    case C.TOGGLE_DAPP:
+      return {
+        ...state,
+        toggleDapp: !state.toggleDapp,
+      };
+
+    default:
+      return state;
+  }
+}
 export default combineReducers({
   user,
   loggedIn,
@@ -208,4 +220,5 @@ export default combineReducers({
   userOpenUpdate,
   userBuffer,
   userEvents,
+  toggleDapp,
 });
