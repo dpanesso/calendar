@@ -56,11 +56,13 @@ export const fetchUpdateUserEvents = (userEvents: Array<Object>, userBuffer: Obj
       case 'new': {
         const id = uuidv1();
         const { title, start, end } = userBuffer;
+        const room = userBuffer.room || '';
         const newMeeting = {
           id,
           title,
           start,
           end,
+          room,
         };
         postData.newEvents = [...userEvents, newMeeting];
         break;

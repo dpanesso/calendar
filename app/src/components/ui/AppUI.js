@@ -57,6 +57,7 @@ const AppUI = (props: Props) => {
   const handleClose = () => {
     closeModal();
   };
+
   const onNewEvent = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'new')
       .then((newEvents) => {
@@ -130,6 +131,9 @@ const AppUI = (props: Props) => {
         break;
       case 'end time':
         updateField('end', rebuildTime(end, value).toString());
+        break;
+      case 'room':
+        updateField('room', value);
         break;
       default:
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);

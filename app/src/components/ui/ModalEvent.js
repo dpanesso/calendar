@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import CalendarButton from './CalendarButton';
+import AddRoomButton from './AddRoomButton';
 
 type Props = {
   userBuffer: Object,
@@ -71,6 +72,10 @@ const ModalEvent = (props: Props) => {
         format="24hr"
         defaultTime={new Date(end)}
         onChange={(evt, value) => onUpdateFieldEvent('end time', value)}
+      />
+      <AddRoomButton
+        onUpdateFieldEvent={onUpdateFieldEvent}
+        userBuffer={userBuffer}
       />
       <CalendarButton
         type={type}

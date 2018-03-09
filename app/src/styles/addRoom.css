@@ -1,0 +1,8 @@
+.addRoom {
+  display: flex;
+}
+
+#addRoomButton {
+  position: relative;
+  top: -5px;
+}

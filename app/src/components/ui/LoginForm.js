@@ -29,6 +29,7 @@ const SignInForm = (props: Props) => {
       /><br />
       <TextField
         name="password"
+        type="password"
         hintText="password"
         floatingLabelText="password"
         onChange={onChange}

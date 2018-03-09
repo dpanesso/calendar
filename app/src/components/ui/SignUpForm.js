@@ -40,6 +40,7 @@ const SignUpForm = (props: Props) => {
       /><br />
       <TextField
         name="password"
+        type="password"
         hintText="password"
         floatingLabelText="password"
         floatingLabelStyle={styles.gray}
@@ -50,6 +51,7 @@ const SignUpForm = (props: Props) => {
       /><br />
       <TextField
         name="confirmPassword"
+        type="password"
         hintText="confirm password"
         floatingLabelText="confirm password"
         errorText={signupErrors.confirmPassword}
