@@ -92,7 +92,11 @@ export const fetchUpdateUserEvents = (userEvents: Array<Object>, userBuffer: Obj
           throw new Error('Could not add event to database.');
         }
         if (res.success) {
-          resolve(postData.newEvents);
+          const data = {
+            newUserEvents: postData.newEvents,
+            newRoomEvents: {}, // temporary,
+          };
+          resolve(data);
         }
       })
       .catch(err => console.error(err));

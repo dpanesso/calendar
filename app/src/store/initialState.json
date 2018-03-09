@@ -22,5 +22,6 @@
   "userOpenUpdate": false,
   "userBuffer": {},
   "calendarLoading": false,
-  "userEvents": []
+  "userEvents": [],
+  "roomEvents": {}
 }

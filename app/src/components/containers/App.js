@@ -41,8 +41,8 @@ const mapDispatchToProps = dispatch => (
     updateField(field, value) {
       dispatch(updateUserField(field, value));
     },
-    updateEvents(events) {
-      dispatch(updateUserEvents(events));
+    updateEvents(userEvents) {
+      dispatch(updateUserEvents(userEvents));
     },
     submitCalendar() {
       dispatch(submitUserCalendar());

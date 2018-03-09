@@ -186,7 +186,19 @@ export const userBuffer = (state: Object = {}, action: Object) => {
 export const userEvents = (state: Array<Object> = [], action: Object) => {
   switch (action.type) {
     case C.UPDATE_MEETINGS:
-      return action.payload;
+      return action.payload.userEvents;
+    default:
+      return state;
+  }
+};
+
+export const roomEvents = (state: Object = {}, action: Object) => {
+  switch (action.type) {
+    case C.UPDATE_MEETINGS:
+      if (action.payload.roomEvents) {
+        return action.payload.roomEvents;
+      }
+      return state;
     default:
       return state;
   }
@@ -220,4 +232,5 @@ export default combineReducers({
   userOpenUpdate,
   userBuffer,
   userEvents,
+  roomEvents,
 });

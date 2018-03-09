@@ -60,16 +60,16 @@ const AppUI = (props: Props) => {
 
   const onNewEvent = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'new')
-      .then((newEvents) => {
-        updateEvents(newEvents);
+      .then(({ newUserEvents, newRoomEvents }) => {
+        updateEvents(newUserEvents, newRoomEvents);
         handleClose();
       });
   };
 
   const onUpdateEvent = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'update')
-      .then((newEvents) => {
-        updateEvents(newEvents);
+      .then(({ newUserEvents, newRoomEvents }) => {
+        updateEvents(newUserEvents, newRoomEvents);
         handleClose();
       });
   };
@@ -90,12 +90,14 @@ const AppUI = (props: Props) => {
 
   const onRemove = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'remove')
-      .then(newEvents => updateEvents(newEvents));
-    handleClose();
+      .then(({ newUserEvents, newRoomEvents }) => {
+        updateEvents(newUserEvents, newRoomEvents);
+        handleClose();
+      });
   };
 
   const onLogin = (events) => {
-    updateEvents(events);
+    updateEvents(events, {});
     handleClose();
   };
 

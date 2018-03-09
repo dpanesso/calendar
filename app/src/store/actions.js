@@ -2,10 +2,13 @@
 import { C } from '../constants';
 
 
-export const updateUserEvents = (userEvents: Array<Object>) => (
+export const updateUserEvents = (userEvents: Array<Object>, roomEvents: Object) => (
   {
     type: C.UPDATE_MEETINGS,
-    payload: userEvents,
+    payload: {
+      userEvents,
+      roomEvents,
+    },
   });
 
 export const updateUserData = (user: Object) => (
