@@ -45,6 +45,17 @@ yarn start-app
 ```
 > Running on http://localhost:3000
 
+## Tests
+* Back-end (Need to launch Redis first)
+```bash
+yarn test-server
+```
+* Front-end (Need to launch API first)
+```bash
+yarn start-api
+yarn test-app
+```
+
 ## Deploy on AWS
 Here's a set-up example.
 * Launch an Ubuntu EC2 instance with the following parameters (use default for others):
@@ -67,6 +78,6 @@ scripts/AWS/install-docker.sh
 * Clone this repository
 * Launch docker-compose, and check the logs until the services are running.
 ```bash
-docker-compose up -d && docker-compose logs -f -t
+yarn start-server
 ```
 > App running on your EC2 public DNS (something like http://ec2-39-205-118-100.us-west-2.compute.amazonaws.com/)
