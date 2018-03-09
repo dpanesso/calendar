@@ -2,7 +2,7 @@
 A meeting room booking system for shared offices.
 
 ## Demo
-TBD
+34.218.16.67
 
 ## Stack
 * [ReactJS](https://reactjs.org/)
