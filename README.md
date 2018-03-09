@@ -48,6 +48,7 @@ yarn start-app
 ## Tests
 * Back-end (Need to launch Redis first)
 ```bash
+./redis-server
 yarn test-server
 ```
 * Front-end (Need to launch API first)
