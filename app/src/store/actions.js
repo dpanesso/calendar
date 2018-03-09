@@ -106,3 +106,10 @@ export const updateUserField = (field: string, value: string) => (
       value,
     },
   });
+  export const toggleDapp = (toggle) => (
+    {
+      type: C.TOGGLE_DAPP,
+      payload: {
+        dappState: toggle,
+      }
+    });

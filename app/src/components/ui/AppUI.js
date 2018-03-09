@@ -13,12 +13,12 @@ import { prefixURL, customPost, fetchUpdateUserEvents } from '../../utils/fetchH
 import parseDates from '../../utils/parseDates';
 import '../../styles/calendar.css';
 
-
 type Props = {
   user: Object,
   loggedIn: boolean,
   userOpenNew: boolean,
   userOpenUpdate: boolean,
+  toggleDapp: boolean,
   userBuffer: Object,
   userEvents: Array<Object>,
   calendarLoading: boolean,
@@ -37,6 +37,8 @@ const AppUI = (props: Props) => {
     loggedIn,
     userOpenNew,
     userOpenUpdate,
+    toggleDapp,
+    onCloseDapp,
     userBuffer,
     userEvents,
     openModal,
@@ -47,6 +49,7 @@ const AppUI = (props: Props) => {
     updateUser,
     logOut,
     calendarLoading,
+    onOnboardingDone,
   } = props;
 
   const handleOpen = (event: Object) => {
@@ -57,6 +60,7 @@ const AppUI = (props: Props) => {
   const handleClose = () => {
     closeModal();
   };
+
   const onNewEvent = () => {
     fetchUpdateUserEvents(userEvents, userBuffer, user, 'new')
       .then((newEvents) => {
@@ -135,7 +139,9 @@ const AppUI = (props: Props) => {
         console.log(`onUpdateFieldEvent - wrong key: ${key}`);
     }
   };
-
+const onCloseDappEvent = () => {
+  onCloseDapp()
+}
   return (
     <BrowserRouter>
       <div className="App">
@@ -162,6 +168,8 @@ const AppUI = (props: Props) => {
             onSubmit={onSubmit}
             onRemove={onRemove}
             calendarLoading={calendarLoading}
+            toggleDapp={toggleDapp}
+            onCloseDapp={onCloseDappEvent}
           />
           <PrivateRoute
             path="/rooms"

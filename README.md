@@ -70,3 +70,39 @@ scripts/AWS/install-docker.sh
 docker-compose up -d && docker-compose logs -f -t
 ```
 > App running on your EC2 public DNS (something like http://ec2-39-205-118-100.us-west-2.compute.amazonaws.com/)
+
+# DApp Ethereum
+
+Dapp Ethereum to allocate random room for booking a meeting
+
+## Pre-requisite documentation to read
+
+* Solidity: https://solidity.readthedocs.io
+* web3.js: https://github.com/ethereum/web3.js
+* truffle-contract: https://github.com/trufflesuite/truffle-contract
+
+## Pre-requisite tools to install
+
+```
+npm install -g truffle ganache-cli
+```
+
+## Develop
+
+Run a development Ethereum network:
+
+```
+ganache-cli --networkId 1337
+```
+
+> Alternatively you can run on Ethereum testnet.
+
+Run the truffle tool, to generate and compile the contracts. **NB: the truffle project lives under src/dapp**
+
+```
+cd src/dapp
+truffle compile
+truffle deploy --network development
+```
+
+> Adapt the deploy based on your need. Read truffle documentation for more information.

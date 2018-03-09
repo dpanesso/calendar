@@ -198,10 +198,28 @@ export const calendarLoading = (state: boolean = false, action: Object) => {
       return false;
     case C.SUBMIT_CALENDAR:
       return true;
+    }
+  };
+export const toggleDapp = (state: Array<Object> = [], action: Object) => {
+  switch (action.type) {
+    case C.TOGGLE_DAPP:
+      return action.payload;
     default:
       return state;
   }
 };
+
+export const onboardingDone = (state: Array<Object> = [], action: Object) => {
+  switch (action.type) {
+    case C.ON_BOARDING_DONE:
+      return {
+        ...state,
+        onboardingDone: true,
+      };
+    default:
+      return state;
+  }
+}
 
 export default combineReducers({
   user,
@@ -220,4 +238,6 @@ export default combineReducers({
   userOpenUpdate,
   userBuffer,
   userEvents,
+  toggleDapp,
+  onboardingDone
 });

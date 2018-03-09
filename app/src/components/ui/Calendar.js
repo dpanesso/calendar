@@ -4,8 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import Modal from './Modal';
-
-
+import Dapp from './Dapp';
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
 BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
@@ -36,11 +35,16 @@ const Calendar = (props: Props) => {
     userBuffer,
     onRemove,
     calendarLoading,
+    toggleDapp,
+    onCloseDapp,
   } = props;
+
   return (
     <div>
       <h1>My calendar</h1>
-      <BigCalendar
+      {(toggleDapp.dappState === true) ? <Dapp onClose={onCloseDapp}/> :
+      (<div>
+        <BigCalendar
         selectable
         events={events}
         defaultView="week"
@@ -66,6 +70,9 @@ const Calendar = (props: Props) => {
           calendarLoading={calendarLoading}
         />
       </Dialog>
+      </div>)
+      }
+
     </div>
   );
 };

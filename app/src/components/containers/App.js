@@ -8,12 +8,14 @@ import {
   updateUserData,
   logOutUser,
   submitUserCalendar,
+  toggleDapp,
 } from '../../store/actions';
 import AppUI from '../ui/AppUI';
 
 
 const mapStateToProps = state => (
   {
+    toggleDapp: state.toggleDapp,
     userOpenNew: state.userOpenNew,
     userOpenUpdate: state.userOpenUpdate,
     userBuffer: state.userBuffer,
@@ -43,10 +45,14 @@ const mapDispatchToProps = dispatch => (
     },
     updateEvents(events) {
       dispatch(updateUserEvents(events));
+      dispatch(toggleDapp(true));
     },
     submitCalendar() {
       dispatch(submitUserCalendar());
     },
+    onCloseDapp() {
+      dispatch(toggleDapp(false));
+    }
   }
 );
 
