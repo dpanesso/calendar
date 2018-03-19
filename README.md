@@ -2,7 +2,7 @@
 A meeting room booking system for shared offices.
 
 ## Demo
-www.jknap.io
+54.68.184.63
 
 ## Stack
 * [ReactJS](https://reactjs.org/)
