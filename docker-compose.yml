@@ -46,7 +46,7 @@ services:
     volumes:
       - ./nginx/mysite.template:/etc/nginx/conf.d/mysite.template
     ports:
-      - '80:80'
+      - '8686:80'
     environment:
       - APP_HOST=app
       - APP_PORT=3000
